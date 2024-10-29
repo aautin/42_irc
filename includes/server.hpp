@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_irc.hpp                                         :+:      :+:    :+:   */
+/*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/10/29 15:20:01 by kpoilly          ###   ########.fr       */
+/*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
+/*   Updated: 2024/10/29 15:20:31 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_IRC_HPP
-# define FT_IRC_HPP
+#ifndef SERVER_HPP
+# define SERVER_HPP
 
-# include <iostream>
-# include <cstring>
-# include <vector>
-# include <sys/socket.h>
-# include <sys/types.h>
-# include <netinet/in.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <arpa/inet.h>
-# include <poll.h>
-# include <csignal>
+# include "ft_irc.hpp"
 
-# include "channel.hpp"
-# include "user.hpp"
-# include "utils.hpp"
+class Server
+{
+	private:
+
+	public:	
+};
 
 #endif
