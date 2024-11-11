@@ -6,8 +6,10 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/11 14:31:20 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/11 15:35:02 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/server.hpp"
+
+Server::Server(): _port(0){};

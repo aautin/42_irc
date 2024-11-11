@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/11 14:40:37 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/11 15:34:39 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ class Server
 	private:
 		std::vector<Channel *> 	_channels_list;
 		std::vector<User *> 	_users_list;
-		std::string				password;
+		
+		std::string				_password;
+		int						_port;
 
 	public:
 		Server();
