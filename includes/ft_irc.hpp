@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/10/29 15:20:01 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/11 14:13:16 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # include <arpa/inet.h>
 # include <poll.h>
 # include <csignal>
+# include <cstdio>
+# include <stdlib.h>
 
 # include "channel.hpp"
 # include "user.hpp"
