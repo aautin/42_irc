@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/10/29 15:18:29 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/11 14:43:14 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@
 class Channel
 {
 	private:
+		std::string _name;
 
-	public:	
+	public:
+		Channel();
+		Channel(const Channel& copy);
+		Channel& operator=(const Channel& copy);
+		~Channel();
 };
 
 #endif

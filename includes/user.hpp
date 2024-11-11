@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:53 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/10/29 15:19:53 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/11 14:41:18 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@
 class User
 {
 	private:
+		std::string _name;
+		std::string _ipAdress;
 
-	public:	
+	public:
+		User();
+		User(const User& copy);
+		User& operator=(const User& copy);
+		~User();
 };
 
 #endif
