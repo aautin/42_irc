@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user.cpp                                           :+:      :+:    :+:   */
+/*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/11 16:18:35 by kpoilly          ###   ########.fr       */
+/*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
+/*   Updated: 2024/11/11 16:18:17 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/user.hpp"
+#include "../includes/channel.hpp"
 
-User::User(){};
-User::User(const User& copy){*this = copy;};
+Channel::Channel(){};
+Channel::Channel(const Channel& copy){*this = copy;};
 
-User& User::operator=(const User& copy)
+Channel& Channel::operator=(const Channel& copy)
 {
 	this->_name = copy._name;
-	this->_ipAddress = copy._ipAddress;
 	return *this;
 };
 
-User::~User(){};
+Channel::~Channel(){};

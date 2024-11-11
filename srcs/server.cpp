@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/11 15:49:34 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/11 16:18:26 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Server& Server::operator=(const Server& copy)
 	this->_password = copy._password;
 	this->_channels_list = copy._channels_list;
 	this->_users_list = copy._users_list;
+	return *this;
 };
 
 Server::~Server()
