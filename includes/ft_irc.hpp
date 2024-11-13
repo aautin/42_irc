@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/11 14:13:16 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/13 18:31:10 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <cstdio>
 # include <stdlib.h>
 
+# include "server.hpp"
 # include "channel.hpp"
 # include "user.hpp"
 # include "utils.hpp"
