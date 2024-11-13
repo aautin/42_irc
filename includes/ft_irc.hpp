@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 18:31:10 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:09:32 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_IRC_HPP
 
 # include <iostream>
+# include <sstream>
 # include <cstring>
 # include <vector>
 # include <sys/socket.h>
