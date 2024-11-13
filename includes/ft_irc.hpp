@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 19:09:32 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:36:37 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,9 @@
 # include "channel.hpp"
 # include "user.hpp"
 # include "utils.hpp"
+
+class Server;
+
+void	parsing(Server& server, std::string cmd);
 
 #endif

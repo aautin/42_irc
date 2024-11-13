@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 18:55:44 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:34:11 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ class Server
 		int						_port;
 		sockaddr_in 			_address;
 		std::string				_password;
-
 	public:
 		//Setup
 		Server(int port);
@@ -48,6 +47,7 @@ class Server
 		void	add_channel(Channel *channel);
 		void	remove_channel(Channel *channel);
 
+		User*					_user;
 };
 
 #endif

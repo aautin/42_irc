@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 19:16:58 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/13 19:35:30 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ int	main(int ac, char **av)
 		std::cout << "Message: " << buffer << std::endl;
 		std::istringstream stream(buffer);
 		while(std::getline(stream, cmd))
-		{
-			std::cout << "CMD: " << cmd << std::endl;
-		};
+			parsing(server, cmd);
 	};
 
 	//send(client_fd, "CAP * LS :multi-prefix", 24, 0);
