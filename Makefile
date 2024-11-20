@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+         #
+#    By: aautin <aautin@student.42.fr >             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 13:43:51 by kpoilly           #+#    #+#              #
-#    Updated: 2024/11/13 19:35:44 by kpoilly          ###   ########.fr        #
+#    Updated: 2024/11/20 17:44:29 by aautin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ B_OBJECTS 		= $(B_SRCS:%.cpp=%.o)
 
 RM 						= @rm -f
 CC 						= c++
-CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98
+CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98 -g3
 
 all:			$(NAME)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 19:34:11 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:37:02 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,31 +23,49 @@ class User;
 class Server
 {
 	private:
-		std::vector<Channel *> 	_channels_list;
-		std::vector<User *> 	_users_list;
-		
 		int						_fd;
 		int						_port;
-		sockaddr_in 			_address;
+		sockaddr_in				_address;
 		std::string				_password;
-	public:
-		//Setup
-		Server(int port);
-		Server(const Server& copy);
-		Server& operator=(const Server& copy);
-		~Server();
-	
-		//Getters
-		int						get_servfd();
-		std::string				get_password();
-		std::vector<Channel *>	get_channels_list();
-		std::vector<User *>		get_users_list();
-			
-		//Utils
-		void	add_channel(Channel *channel);
-		void	remove_channel(Channel *channel);
 
-		User*					_user;
+		std::vector<Channel>	_channels;
+		std::vector<User>		_users;
+		std::vector<pollfd>		_pollfd;
+
+	public:
+		//Constructors-Destructors
+		Server(int port, std::string const &password = NULL);
+		~Server();
+
+		//Getters
+		int						get_fd() const;
+		int						get_port() const;
+		sockaddr_in				get_address() const;
+		std::string				get_password() const;
+		std::vector<Channel>	get_channels() const;
+		std::vector<User>		get_users() const;
+		std::vector<pollfd>		get_pollfd() const;
+
+		//Poll
+		int		open_poll();
+		void	handle_poll(int index);
+
+		//Setters
+		void	remove_user(int index);
+		// void	add_channel(Channel const &channel);
+		// void	remove_channel(Channel &channel);
+
+		//Exceptions
+		class System : public std::exception
+		{
+			public:
+				System(std::string const &type) throw() : _type(type) {}
+				~System() throw() {}
+				const char*	what() const throw() { return _type.c_str(); }
+
+			private:
+				std::string _type;
+		};
 };
 
 #endif

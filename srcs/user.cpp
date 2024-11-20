@@ -3,33 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 19:39:49 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/20 17:49:35 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/user.hpp"
 
-User::User(std::string nick, std::string name, std::string ip, std::string real)
-: _nickname(nick), _name(name), _ipAddress(ip), _realname(real)
-{
-	std::cout << "A new user has been created." << std::endl;
-	std::cout << "nickname: " << this->_nickname << std::endl;
-	std::cout << "name: " << this->_name << std::endl;
-	std::cout << "ip address: " << this->_ipAddress << std::endl;
-	std::cout << "real name: " << this->_realname << std::endl;
-};
-User::User(const User& copy){*this = copy;};
 
-User& User::operator=(const User& copy)
+//Constructors-Destructors
+User::User() : _size(sizeof(this->_address))
 {
-	this->_nickname = copy._nickname;
-	this->_name = copy._name;
-	this->_ipAddress = copy._ipAddress;
-	this->_realname = copy._realname;
-	return *this;
+	memset(&this->_address, 0, this->_size);
 };
 
-User::~User(){};
+User::~User() {};
+//------
+
+
+//Setters
+void User::beAccepted(int server_fd)
+{
+	this->_fd = accept(server_fd, (struct sockaddr*) &this->_address, &this->_size);
+	if (_fd >= 0)
+	{
+		this->_ip = inet_ntoa(this->_address.sin_addr);
+		this->_port = ntohs(this->_address.sin_port);
+
+		//To be deleted
+		std::cout << "Server accepted a new client:" << std::endl;
+		std::cout << "fd: " << this->_fd << std::endl;
+		std::cout << "memoryAdress: " << static_cast<void*>(&this->_address) << std::endl;
+		std::cout << "size: " << this->_size << std::endl;
+		std::cout << "ip: " << this->_ip << std::endl;
+		std::cout << "port: " << this->_port << std::endl << std::endl;
+		//------
+	}
+	else
+		throw Refused();
+};
+
+void User::beNamed(std::string &nickname, std::string &name, std::string &realname)
+{
+	this->_nickname = nickname;
+	this->_name = name;
+	this->_realname = realname;
+};
+//------
+
+
+//Getters
+int User::get_fd() const
+{
+	return this->_fd;
+};
+//------
