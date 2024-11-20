@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.hpp                                         :+:      :+:    :+:   */
+/*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 17:37:02 by aautin           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:18:18 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 # define SERVER_HPP
 
 # include "ft_irc.hpp"
-# include "channel.hpp"
-# include "user.hpp"
+# include "User.hpp"
 
-class Channel;
 class User;
 
 class Server
@@ -28,7 +26,6 @@ class Server
 		sockaddr_in				_address;
 		std::string				_password;
 
-		std::vector<Channel>	_channels;
 		std::vector<User>		_users;
 		std::vector<pollfd>		_pollfd;
 
@@ -42,7 +39,6 @@ class Server
 		int						get_port() const;
 		sockaddr_in				get_address() const;
 		std::string				get_password() const;
-		std::vector<Channel>	get_channels() const;
 		std::vector<User>		get_users() const;
 		std::vector<pollfd>		get_pollfd() const;
 
@@ -52,20 +48,6 @@ class Server
 
 		//Setters
 		void	remove_user(int index);
-		// void	add_channel(Channel const &channel);
-		// void	remove_channel(Channel &channel);
-
-		//Exceptions
-		class System : public std::exception
-		{
-			public:
-				System(std::string const &type) throw() : _type(type) {}
-				~System() throw() {}
-				const char*	what() const throw() { return _type.c_str(); }
-
-			private:
-				std::string _type;
-		};
 };
 
 #endif

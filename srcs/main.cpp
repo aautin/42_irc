@@ -6,11 +6,11 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 17:40:13 by aautin           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:17:21 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_irc.hpp"
+#include "ft_irc.hpp"
 
 int	main(int ac, char **av)
 {
@@ -44,14 +44,12 @@ int	main(int ac, char **av)
 					--i;
 				} catch (User::Refused) {
 					std::perror("accept");
-				} catch (Server::System) {
+				} catch (std::exception) {
 					return EXIT_FAILURE;
 				}
 			}
 		}
-	} catch (Server::System const &e) {
-		std::perror(e.what());
-	}
-	
+	} catch (std::exception) {}
+
 	return EXIT_SUCCESS;
 };

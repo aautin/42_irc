@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.cpp                                         :+:      :+:    :+:   */
+/*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 17:53:26 by aautin           ###   ########.fr       */
+/*   Updated: 2024/11/20 18:22:08 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/server.hpp"
+#include "Server.hpp"
 
 //Constructors-Destructors
 Server::Server(int port, std::string const &password)
@@ -18,7 +18,10 @@ Server::Server(int port, std::string const &password)
 	//Open socket on a file descriptor
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
-		throw System("Socket opening");
+	{
+		std::perror("Socket opening");
+		throw std::exception();
+	}
 
 	//Configure socket and password
 	this->_port = port;
@@ -31,14 +34,16 @@ Server::Server(int port, std::string const &password)
 	if (bind(this->_fd, (struct sockaddr*)&this->_address, sizeof(this->_address)))
 	{
 		close(this->_fd);
-		throw System("Binding socket on network and port");
+		std::perror("Binding socket on network and port");
+		throw std::exception();
 	}
 
 	//Open slots for clients connections
 	if (listen(this->_fd, 42) < 0)
 	{
 		close(this->_fd);
-		throw System("Listening for clients connections");
+		std::perror("Listening for clients connections");
+		throw std::exception();
 	}
 
 	//Add server fd in the pollfd
@@ -91,11 +96,6 @@ std::string Server::get_password() const
 	return this->_password;
 };
 
-std::vector<Channel> Server::get_channels() const
-{
-	return this->_channels;
-};
-
 std::vector<User> Server::get_users() const
 {
 	return this->_users;
@@ -141,14 +141,13 @@ void Server::handle_poll(int index)
 			ssize_t bytes_read = recv(this->_pollfd[index].fd, buffer, sizeof(buffer), 0);
 
 			if (bytes_read <= 0) // Disconnection message
-			{
-				close(this->_users[index - 1].get_fd());
 				throw User::Quit();
-			}
 			else // Other messages
 			{
 				buffer[bytes_read] = '\0';
 				std::cout << "Received: " << buffer << std::endl;
+
+				// here, introduce the command manager ...
 			}
 		}
 	}
@@ -157,25 +156,9 @@ void Server::handle_poll(int index)
 
 
 //Setters
-void	Server::remove_user(int index)
+void	Server::remove_user(int pollfd_index)
 {
-	this->_pollfd.erase(this->_pollfd.begin() + index);
-	this->_users.erase(this->_users.begin() + index - 1);
+	close(this->_pollfd[pollfd_index].fd);
+	this->_pollfd.erase(this->_pollfd.begin() + pollfd_index);
+	this->_users.erase(this->_users.begin() + pollfd_index - 1);
 }
-// void Server::add_channel(Channel const &channel)
-// {
-// 	this->_channels.push_back(channel);
-// };
-
-// void Server::remove_channel(Channel &channel)
-// {
-// 	for (size_t i = 0; i < this->_channels.size(); i++)
-// 	{
-// 		if (this->_channels[i] == channel)
-// 		{
-// 			this->_channels.erase(this->_channels.begin() + i);
-// 			break;
-// 		}
-// 	}
-// };
-//------

@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 14:30:11 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/10/29 14:30:40 by kpoilly          ###   ########.fr       */
+/*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
+/*   Updated: 2024/11/20 18:24:36 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#include "Channel.hpp"
 
-# include "ft_irc.hpp"
+Channel::Channel(){};
+Channel::Channel(const Channel& copy){*this = copy;};
 
-#endif
+Channel& Channel::operator=(const Channel& copy)
+{
+	this->_name = copy._name;
+	return *this;
+};
+
+Channel::~Channel(){};
