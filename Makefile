@@ -6,7 +6,7 @@
 #    By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 13:43:51 by kpoilly           #+#    #+#              #
-#    Updated: 2024/11/26 15:45:12 by kpoilly          ###   ########.fr        #
+#    Updated: 2024/11/26 16:47:36 by kpoilly          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,23 +27,23 @@ B_OBJECTS 		= $(B_SRCS:%.cpp=%.o)
 
 RM 						= @rm -f
 CC 						= c++
-CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98
+CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98 -g3
 
 all:			$(NAME)
 
 .cpp.o:
-				@$(CC) $(CFLAGS) -c $< -o ${<:.cpp=.o}
+				@$(CC) $(CFLAGS) -I$(HEAD) -c $< -o ${<:.cpp=.o}
 
 ./objs/%.o:./srcs/%.cpp
 				@mkdir -p ./objs
-				@$(CC) $(CFLAGS) -c $< -o $@
+				@$(CC) $(CFLAGS) -I$(HEAD) -c $< -o $@
 				
 $(NAME):		$(M_OBJECTS) $(B_OBJECTS) $(HEAD)
-				@$(CC) $(CFLAGS) -I ./ -o $(NAME) $(M_OBJECTS) $(B_OBJECTS)
+				@$(CC) $(CFLAGS) -I $(HEAD) -o $(NAME) $(M_OBJECTS) $(B_OBJECTS)
 				@echo "\033c\033[0;32mMandatory part compiled.\033[0;37m"
 
 bonus:			fclean $(M_OBJECTS) $(B_OBJECTS) $(HEAD)
-						@$(CC) $(CFLAGS) -I ./includes/ -o $(NAME) $(M_OBJECTS) $(B_OBJECTS) \
+						@$(CC) $(CFLAGS) -I $(HEAD) -o $(NAME) $(M_OBJECTS) $(B_OBJECTS) \
 				@echo "\033c\033[0;32mBonus part compiled.\033[0;37m"
 							
 clean:
@@ -53,5 +53,7 @@ clean:
 fclean:			clean
 						$(RM) -r ./objs
 						$(RM) $(NAME)
-re:						fclean all
-.PHONY:		all clean fclean re
+						
+re:				fclean all
+
+.PHONY:			all clean fclean re

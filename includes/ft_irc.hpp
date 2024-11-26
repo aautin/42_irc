@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 15:45:17 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 16:48:26 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <csignal>
 # include <cstdio>
 # include <stdlib.h>
+# include <exception>
 
 # include "server.hpp"
 # include "client.hpp"

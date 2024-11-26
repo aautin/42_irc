@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/11/26 15:29:00 by kpoilly          ###   ########.fr       */
+=======
+/*   Updated: 2024/11/20 18:17:21 by aautin           ###   ########.fr       */
+>>>>>>> ea44f80a47db521d03b7daad77c078d999d7314b
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_irc.hpp"
+#include "ft_irc.hpp"
 
 // int main(int ac, char **av)
 // {
@@ -84,7 +88,7 @@ int main(int ac, char **av)
 		if (ac != 3)
 	{
 		std::cerr << "\033[1;31mircserv: invalid arguments.\n\033[3;30mcorrect format is ./ircserv <port> <password>\033[0m" << std::endl;
-		return 42;
+		return EXIT_SUCCESS;
 	}
 
 	int port = atoi(av[1]); // default irc port: 6667
