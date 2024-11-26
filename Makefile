@@ -6,7 +6,7 @@
 #    By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 13:43:51 by kpoilly           #+#    #+#              #
-#    Updated: 2024/11/20 15:16:44 by kpoilly          ###   ########.fr        #
+#    Updated: 2024/11/26 15:45:12 by kpoilly          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ HEAD			= ./includes/ft_irc.hpp ./includes/utils.hpp \
 				  ./includes/server.hpp ./includes/channel.hpp \
 				  ./includes/user.hpp ./includes/client.hpp
 
-M_FILES 		= main.cpp utils.cpp server.cpp channel.cpp user.cpp parsing.cpp
+M_FILES 		= main.cpp utils.cpp server.cpp channel.cpp user.cpp parsing.cpp \
+				  commands.cpp
 M_SRCS			= $(addprefix ./objs/, $(M_FILES))
 M_OBJECTS 		= $(M_SRCS:%.cpp=%.o)
 

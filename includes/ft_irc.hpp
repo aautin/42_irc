@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 15:04:37 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:45:17 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@
 
 class Server;
 
-void	parsing(Server& server, std::string cmd);
+void	parsing(Server& server, int client_fd, std::string cmd);
+
+//utils
+void	stoc(int client_fd, std::string msg);
+
+//commands
+void	pong(int client_fd, std::string arg);
+
 
 #endif

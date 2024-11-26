@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 15:15:59 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:15:58 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,23 @@ void	Server::remove_channel(Channel *channel)
 		if (this->_channels_list[i] == channel)
 		{
 			this->_channels_list.erase(this->_channels_list.begin() + i);
+			break;
+		}
+	}
+};
+
+void	Server::add_user(User *user)
+{
+	this->_users_list.push_back(user);
+};
+
+void	Server::remove_user(User *user)
+{
+	for (size_t i = 0; i < this->_users_list.size(); i++)
+	{
+		if (this->_users_list[i] == user)
+		{
+			this->_users_list.erase(this->_users_list.begin() + i);
 			break;
 		}
 	}

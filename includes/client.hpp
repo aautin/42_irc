@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 15:03:11 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 15:04:18 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:01:33 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 # include "ft_irc.hpp"
 
-typedef struct sClient {
+struct Client 
+{
 	struct sockaddr_in	memoryAdress;
 	socklen_t			size;
 	char*				ip;
 	int					fd;
 	int					port;
-}	Client;
+};
 
 #endif

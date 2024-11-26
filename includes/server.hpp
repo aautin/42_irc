@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 15:15:48 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:16:48 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_irc.hpp"
 # include "channel.hpp"
 # include "user.hpp"
+# include "client.hpp"
 
 class Channel;
 class User;
@@ -46,8 +47,12 @@ class Server
 		//Utils
 		void	add_channel(Channel *channel);
 		void	remove_channel(Channel *channel);
+		void	add_user(User *user);
+		void	remove_user(User *user);
 
-		User*					_user;
+		void	print_channels();
+		void	print_users();
+
 		int						fd;
 		std::vector<pollfd>		pollfds;
 		std::vector<Client>		clients;

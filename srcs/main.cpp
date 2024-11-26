@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 15:17:21 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:29:00 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,12 @@ int main(int ac, char **av)
 						else
 						{ // Other messages
 							buffer[bytes_read] = '\0';
-							std::cout << "Received: " << buffer << std::endl;
+							//std::cout << "\nReceived: " << buffer << std::endl;
+							
+							std::string cmd;
+							std::istringstream stream(buffer);
+							while (std::getline(stream, cmd))
+ 							parsing(server, server.pollfds[i].fd, cmd);
 						}
 					}
 				}

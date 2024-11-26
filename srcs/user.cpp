@@ -6,14 +6,14 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/13 19:39:49 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 16:26:17 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/user.hpp"
 
-User::User(std::string nick, std::string name, std::string ip, std::string real)
-: _nickname(nick), _name(name), _ipAddress(ip), _realname(real)
+User::User(std::string nick, std::string name, std::string ip, std::string real, int fd)
+: _nickname(nick), _name(name), _ipAddress(ip), _realname(real), _clientfd(fd)
 {
 	std::cout << "A new user has been created." << std::endl;
 	std::cout << "nickname: " << this->_nickname << std::endl;
@@ -29,6 +29,7 @@ User& User::operator=(const User& copy)
 	this->_name = copy._name;
 	this->_ipAddress = copy._ipAddress;
 	this->_realname = copy._realname;
+	this->_clientfd = copy._clientfd;
 	return *this;
 };
 
