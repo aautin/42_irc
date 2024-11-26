@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   channel.hpp                                        :+:      :+:    :+:   */
+/*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/20 17:08:58 by aautin           ###   ########.fr       */
+/*   Created: 2024/10/29 14:29:34 by kpoilly           #+#    #+#             */
+/*   Updated: 2024/11/26 15:58:26 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHANNEL_HPP
-# define CHANNEL_HPP
+#include "../includes/ft_irc.hpp"
 
-# include "ft_irc.hpp"
-
-class Channel
+void	stoc(int client_fd, std::string msg)
 {
-	private:
-		std::string _name;
-
-	public:
-		Channel();
-		Channel(const Channel& copy);
-		Channel& operator=(const Channel& copy);
-		~Channel();
+	std::cout << "\033[1;32mServ to Client : " << msg << "\033[0m" << std::endl;
+	send(client_fd, msg.c_str(), msg.size(), 0);
 };
-
-#endif

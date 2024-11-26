@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Server.hpp                                         :+:      :+:    :+:   */
+/*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 16:48:22 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/11/26 15:16:48 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "user.hpp"
 # include "client.hpp"
 
+class Channel;
 class User;
 
 class Server
@@ -27,7 +28,7 @@ class Server
 		std::vector<User *> 	_users_list;
 		
 		int						_port;
-		sockaddr_in				_address;
+		sockaddr_in 			_address;
 		std::string				_password;
 
 	public:
