@@ -32,10 +32,11 @@
 # include "client.hpp"
 # include "channel.hpp"
 # include "user.hpp"
-# include "utils.hpp"
 
 # define DEFAULT_IRC_PORT	6667
 # define MAX_CLIENTS_NB		5
+# define RPL_VERSION		"1.0"
+# define RPL_ISUPPORT		"005"
 
 class Server;
 
@@ -45,7 +46,8 @@ void	parsing(Server& server, int client_fd, std::string cmd);
 void	stoc(int client_fd, std::string msg);
 
 //commands
+void	cap(int client_fd, std::string arg);
 void	pong(int client_fd, std::string arg);
-
+void	version(int client_fd);
 
 #endif

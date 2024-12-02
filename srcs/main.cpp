@@ -12,54 +12,6 @@
 
 #include "../includes/ft_irc.hpp"
 
-// int main(int ac, char **av)
-// {
-// 	sockaddr_in clientAddress;
-// 	socklen_t clientAddrLen = sizeof(clientAddress);
-// 	int client_fd = accept(server.get_servfd(), (sockaddr *)&clientAddress, &clientAddrLen);
-// 	if (client_fd < 0)
-// 	{
-// 		std::perror("accept");
-// 		exit(42);
-// 	}
-// 	std::cout << "\033[1;32mClient is connected.\033[0m" << std::endl;
-
-// 	/*
-// 	Test reception de messages
-
-// 	Pour se connecter :
-// 	-lancer ./ircserv avec un port et un mdp (pas encore utilise).
-// 	-dans un nouveau terminal: "nc 127.0.0.1 port".
-// 	-le client est connecte et un message peut etre envoye.
-// 	*/
-
-// 	char buffer[100000];
-// 	std::string cmd;
-
-// 	while (cmd != "QUIT")
-// 	{
-// 		ssize_t msg = read(client_fd, buffer, sizeof(buffer) - 1);
-// 		if (msg < 0)
-// 		{
-// 			perror("read");
-// 			close(client_fd);
-// 			exit(42);
-// 		}
-// 		buffer[msg] = '\0';
-// 		std::cout << "Message: " << buffer << std::endl;
-// 		std::istringstream stream(buffer);
-// 		while (std::getline(stream, cmd))
-// 			parsing(server, cmd);
-// 	};
-
-// 	// send(client_fd, "CAP * LS :multi-prefix", 24, 0);
-// 	// send(client_fd, "CAP * ACK multi-prefix", 24, 0);
-
-// 	close(client_fd);
-
-// 	return 0;
-// };
-
 void disconnectServer(Server &server)
 {
 	std::vector<pollfd>::iterator pollfds = server.pollfds.begin();

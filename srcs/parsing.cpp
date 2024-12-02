@@ -24,9 +24,11 @@ void	parsing(Server& server, int client_fd, std::string cmd)
 	}
 	
 	if (split[0] == "CAP")
-		std::cout << "pouet" << std::endl;
+		cap(client_fd, split[1]);
 	else if (split[0] == "USER")
 		server.add_user(new User(split[1], split[2], split[3], split[4], client_fd));
 	else if (split[0] == "PING")
 		pong(client_fd, split[1]);
+	else if (split[0] == "VERSION")
+		version(client_fd);
 };

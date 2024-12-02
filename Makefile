@@ -12,7 +12,7 @@
 
 NAME 			= ircserv
 
-HEAD			= ./includes/ft_irc.hpp ./includes/utils.hpp \
+HEAD			= ./includes/ft_irc.hpp \
 				  ./includes/server.hpp ./includes/channel.hpp \
 				  ./includes/user.hpp ./includes/client.hpp
 
