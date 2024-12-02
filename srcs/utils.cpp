@@ -15,5 +15,6 @@
 void	stoc(int client_fd, std::string msg)
 {
 	std::cout << "\033[1;32m[SENT->" << client_fd << "]\033[0m"<< msg;
+	//check le fd du client dans la poll et son flag voir si ready
 	send(client_fd, msg.c_str(), msg.size(), 0);
 };
