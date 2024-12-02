@@ -35,8 +35,10 @@ void	nick(Server& server, int client_fd, std::string arg)
 	}
 	user.set_name(arg);
 	server.send_to_all(":" + currNick + " NICK " + user.get_name() + "\r\n");
+	//Afficher un truc sur tous les channels
 };
 
+//command USER <nickname> <IP Address> <realname>
 void	user(Server& server, int client_fd, std::string name, std::string IP, std::string real)
 {
 	User& user = server.get_user(client_fd);
