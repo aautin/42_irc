@@ -31,4 +31,6 @@ void	parsing(Server& server, int client_fd, std::string cmd)
 		pong(client_fd, split[1]);
 	else if (split[0] == "VERSION")
 		version(client_fd);
+	else if (split[0] == "MOTD")
+		version(client_fd);
 };

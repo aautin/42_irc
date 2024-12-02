@@ -49,5 +49,6 @@ void	stoc(int client_fd, std::string msg);
 void	cap(int client_fd, std::string arg);
 void	pong(int client_fd, std::string arg);
 void	version(int client_fd);
+void	motd(Server &server, int client_fd);
 
 #endif

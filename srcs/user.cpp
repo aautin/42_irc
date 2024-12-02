@@ -34,3 +34,13 @@ User& User::operator=(const User& copy)
 };
 
 User::~User(){};
+
+std::string	User::get_name()
+{
+	return this->_name;
+};
+
+int		User::get_fd()
+{
+	return this->_clientfd;
+};

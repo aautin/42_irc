@@ -30,6 +30,7 @@ class Server
 		int						_port;
 		sockaddr_in 			_address;
 		std::string				_password;
+		std::string				_motd;
 
 	public:
 		//Setup
@@ -43,6 +44,8 @@ class Server
 		std::string				get_password();
 		std::vector<Channel *>	get_channels_list();
 		std::vector<User *>		get_users_list();
+		User&					get_user(int fd);
+		std::string				get_motd();
 			
 		//Utils
 		void	add_channel(Channel *channel);

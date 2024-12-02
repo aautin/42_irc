@@ -48,6 +48,8 @@ Server::Server(int port)
 	// Add server fd in the poll of fds
 	pollfd serverPollfd = {this->fd, POLLIN, 0};
 	this->pollfds.push_back(serverPollfd);
+
+	this->_motd = "Bienvenue sur Discord 2.0!";
 };
 Server::Server(const Server& copy){*this = copy;};
 Server& Server::operator=(const Server& copy)
@@ -90,6 +92,21 @@ std::vector<Channel *>	Server::get_channels_list()
 std::vector<User *>		Server::get_users_list()
 {
 	return this->_users_list;
+};
+
+User&	Server::get_user(int fd)
+{
+	for(size_t i = 0; i < this->_users_list.size(); i++)
+	{
+		if (this->_users_list[i]->get_fd() == fd)
+			return *_users_list[i];
+	};
+	return *_users_list[0];
+};
+
+std::string		Server::get_motd()
+{
+	return this->_motd;
 };
 
 //Utils

@@ -33,3 +33,13 @@ void	version(int client_fd)
 	stoc(client_fd, RPL_VERSION);
 	stoc(client_fd, RPL_ISUPPORT);
 };
+
+//command MOTD
+void	motd(Server &server, int client_fd)
+{
+	if (server.get_motd().empty())
+		stoc(client_fd, "422" + server.get_user(client_fd).get_name() + " :No MOTD set\r\n");
+	else
+		stoc(client_fd, "375" + server.get_user(client_fd).get_name() + " :Message of the Day \r\n372 :" +
+		server.get_motd() + "\r\n376 " + server.get_user(client_fd).get_name() + " :End of MOTD.\r\n");
+};

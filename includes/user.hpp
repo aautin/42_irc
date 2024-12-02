@@ -29,6 +29,9 @@ class User
 		User(const User& copy);
 		User& operator=(const User& copy);
 		~User();
+
+		std::string	get_name();
+		int			get_fd();
 };
 
 #endif
