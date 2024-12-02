@@ -21,6 +21,31 @@ void	cap(int client_fd, std::string arg)
 		stoc(client_fd, "CAP * LIST:\r\n");
 };
 
+//Command: NICK <arg>
+void	nick(Server& server, int client_fd, std::string arg)
+{
+	User& user = server.get_user(client_fd);
+	std::string currNick = user.get_name();
+
+	if (!server.check_nick(arg))
+	{
+		stoc(client_fd, ERR_NICKNAMEINUSE + currNick + " " + arg +
+			" :Nickname is already in use\r\n");
+		return;
+	}
+	user.set_name(arg);
+	server.send_to_all(":" + currNick + " NICK " + user.get_name() + "\r\n");
+};
+
+void	user(Server& server, int client_fd, std::string name, std::string IP, std::string real)
+{
+	User& user = server.get_user(client_fd);
+
+	user.set_name(name);
+	user.set_IP(IP);
+	user.set_real(real);
+};
+
 //command PING <arg>
 void	pong(int client_fd, std::string arg)
 {

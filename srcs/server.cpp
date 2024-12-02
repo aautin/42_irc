@@ -20,7 +20,7 @@ Server::Server(int port)
 	this->fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->fd < 0)
 	{
-		std::perror("socket");
+		std::perror("\033[1;31m[SERV]\033[0m socket");
 		exit(EXIT_FAILURE);
 	}
 
@@ -30,7 +30,7 @@ Server::Server(int port)
 
 	if (bind(this->fd, (struct sockaddr*)&this->_address, sizeof(this->_address)))
 	{
-		std::perror("bind");
+		std::perror("\033[1;31m[SERV]\033[0m bind");
 		close(this->fd);
 		exit(EXIT_FAILURE);
 
@@ -38,7 +38,7 @@ Server::Server(int port)
 	
 	if (listen(this->fd, MAX_CLIENTS_NB) < 0)
 	{
-		std::perror("listen");
+		std::perror("\033[1;31m[SERV]\033[0m listen");
 		close(this->fd);
 		exit(EXIT_FAILURE);
 	}
@@ -94,7 +94,7 @@ std::vector<User *>		Server::get_users_list()
 	return this->_users_list;
 };
 
-User&	Server::get_user(int fd)
+User&					Server::get_user(int fd)
 {
 	for(size_t i = 0; i < this->_users_list.size(); i++)
 	{
@@ -104,7 +104,7 @@ User&	Server::get_user(int fd)
 	return *_users_list[0];
 };
 
-std::string		Server::get_motd()
+std::string				Server::get_motd()
 {
 	return this->_motd;
 };
@@ -142,4 +142,20 @@ void	Server::remove_user(User *user)
 			break;
 		}
 	}
+};
+
+bool	Server::check_nick(std::string name)
+{
+	for(size_t i = 0; i < this->_users_list.size(); i++)
+	{
+		if (this->_users_list[i]->get_name() == name)
+			return false;
+	}
+	return true;
+};
+
+void	Server::send_to_all(std::string arg)
+{
+	for(size_t i = 0; i < this->_users_list.size(); i++)
+		stoc(this->_users_list[i]->get_fd(), arg);
 };

@@ -14,6 +14,6 @@
 
 void	stoc(int client_fd, std::string msg)
 {
-	std::cout << "\033[1;32mServ to Client : " << msg << "\033[0m" << std::endl;
+	std::cout << "\033[1;32m[SENT->" << client_fd << "]\033[0m"<< msg;
 	send(client_fd, msg.c_str(), msg.size(), 0);
 };

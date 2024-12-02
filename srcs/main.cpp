@@ -71,22 +71,23 @@ int main(int ac, char **av)
 						newClient.ip = inet_ntoa(newClient.memoryAdress.sin_addr);
 						newClient.port = ntohs(newClient.memoryAdress.sin_port);
 
-						std::cout << "Server accepted a new client:" << std::endl;
-						std::cout << "fd: " << newClient.fd << std::endl;
-						std::cout << "memoryAdress: " << static_cast<void *>(&newClient.memoryAdress) << std::endl;
-						std::cout << "size: " << newClient.size << std::endl;
-						std::cout << "ip: " << newClient.ip << std::endl;
-						std::cout << "port: " << newClient.port << std::endl
+						std::cout << "\033[1;31m[SERV]\033[0m new client accepted:" << std::endl;
+						std::cout << "\033[1;31m[SERV]\033[0m fd: " << newClient.fd << std::endl;
+						std::cout << "\033[1;31m[SERV]\033[0m memoryAdress: " << static_cast<void *>(&newClient.memoryAdress) << std::endl;
+						std::cout << "\033[1;31m[SERV]\033[0m size: " << newClient.size << std::endl;
+						std::cout << "\033[1;31m[SERV]\033[0m ip: " << newClient.ip << std::endl;
+						std::cout << "\033[1;31m[SERV]\033[0m port: " << newClient.port << std::endl
 								  << std::endl;
 
 						server.pollfds.push_back(client_pollfd);
 						server.clients.push_back(newClient);
+						server.add_user(new User(newClient.fd));
 
 						// IRC Handshake Messages
-						std::string welcome_msg = ":localhost 001 yournickname :Welcome to the IRC Network\r\n";
-						std::string host_msg = ":localhost 002 yournickname :Your host is localhost, running version 1.0\r\n";
+						std::string welcome_msg = ":localhost 001 yournickname :Welcome to Discord2.0\r\n";
+						std::string host_msg = ":localhost 002 yournickname :Your host is AlKi, running version 1.0\r\n";
 						std::string created_msg = ":localhost 003 yournickname :This server was created today\r\n";
-						std::string motd_msg = ":localhost 372 yournickname :- Welcome to the server MOTD (Message of the Day)\r\n";
+						std::string motd_msg = ":localhost 372 yournickname :- Welcome to the server !\r\n";
 						send(newClient.fd, welcome_msg.c_str(), welcome_msg.length(), 0);
 						send(newClient.fd, host_msg.c_str(), host_msg.length(), 0);
 						send(newClient.fd, created_msg.c_str(), created_msg.length(), 0);
@@ -103,7 +104,7 @@ int main(int ac, char **av)
 							server.clients.erase(server.clients.begin() + i - 1); // -1 because 1st client fd is pollfd[1] but 1st client is clients[0]
 							server.pollfds.erase(server.pollfds.begin() + i);
 
-							std::cout << "Client disconnected.\n";
+							std::cout << "\033[1;31m[SERV]\033[0m Client " << server.pollfds[i].fd << " disconnected.\n";
 
 							// Adjust index to avoid skipping next fd
 							--i;
@@ -124,7 +125,7 @@ int main(int ac, char **av)
 		}
 	}
 
-	std::cout << "Server is closing..." << std::endl;
+	std::cout << "\033[1;31m[SERV]\033[0m Server is closing..." << std::endl;
 	disconnectServer(server);
 	return EXIT_SUCCESS;
 }

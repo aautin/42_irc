@@ -18,20 +18,24 @@
 class User
 {
 	private:
-		std::string _nickname;
 		std::string _name;
 		std::string _ipAddress;
 		std::string _realname;
 		int 		_clientfd;
 
 	public:
-		User(std::string nick, std::string name, std::string ip, std::string real, int fd);
+		User(int fd);
 		User(const User& copy);
 		User& operator=(const User& copy);
 		~User();
 
 		std::string	get_name();
 		int			get_fd();
+
+		void		set_name(std::string name);
+		void		set_IP(std::string IP);
+		void		set_real(std::string real);
+		void		set_fd(int fd);
 };
 
 #endif

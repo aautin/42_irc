@@ -52,6 +52,9 @@ class Server
 		void	remove_channel(Channel *channel);
 		void	add_user(User *user);
 		void	remove_user(User *user);
+		bool	check_nick(std::string name);
+
+		void	send_to_all(std::string arg);
 
 		void	print_channels();
 		void	print_users();

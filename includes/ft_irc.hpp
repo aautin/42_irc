@@ -35,8 +35,14 @@
 
 # define DEFAULT_IRC_PORT	6667
 # define MAX_CLIENTS_NB		5
+
 # define RPL_VERSION		"1.0"
 # define RPL_ISUPPORT		"005"
+
+//errors
+# define ERR_NICKNAMEINUSE		"433"
+# define ERR_NONICKNAMEGIVEN	"431"
+# define ERR_NOSUCHNICK 		"401"
 
 class Server;
 
@@ -50,5 +56,7 @@ void	cap(int client_fd, std::string arg);
 void	pong(int client_fd, std::string arg);
 void	version(int client_fd);
 void	motd(Server &server, int client_fd);
+void	user(Server& server, int client_fd, std::string name, std::string IP, std::string real);
+void	nick(Server& server, int client_fd, std::string arg);
 
 #endif
