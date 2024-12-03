@@ -11,10 +11,13 @@
 /* ************************************************************************** */
 
 #include "../includes/user.hpp"
+#include <stdlib.h>
 
 User::User(int fd): _clientfd(fd)
 {
-	this->_name = "";
+	std::stringstream str_fd;
+	str_fd << fd;
+	this->_name = "client" + str_fd.str();
 	this->_ipAddress = "127.0.0.1";
 	this->_realname = "";
 };

@@ -84,10 +84,10 @@ int main(int ac, char **av)
 						server.add_user(new User(newClient.fd));
 
 						// IRC Handshake Messages
-						std::string welcome_msg = ":localhost 001 yournickname :Welcome to Discord2.0\r\n";
-						std::string host_msg = ":localhost 002 yournickname :Your host is AlKi, running version 1.0\r\n";
-						std::string created_msg = ":localhost 003 yournickname :This server was created today\r\n";
-						std::string motd_msg = ":localhost 372 yournickname :- Welcome to the server !\r\n";
+						std::string welcome_msg = ":localhost 001 " + server.get_user(newClient.fd).get_name() + " :Welcome to Discord2.0\r\n";
+						std::string host_msg = ":localhost 002 " + server.get_user(newClient.fd).get_name() + " :Your host is AlKi, running version 1.0\r\n";
+						std::string created_msg = ":localhost 003 " + server.get_user(newClient.fd).get_name() + " :This server was created today\r\n";
+						std::string motd_msg = ":localhost 372 " + server.get_user(newClient.fd).get_name() + " :- Welcome to the server !\r\n";
 						send(newClient.fd, welcome_msg.c_str(), welcome_msg.length(), 0);
 						send(newClient.fd, host_msg.c_str(), host_msg.length(), 0);
 						send(newClient.fd, created_msg.c_str(), created_msg.length(), 0);
