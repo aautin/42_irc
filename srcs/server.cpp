@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 13:45:46 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:52:48 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ bool	Server::check_nick(std::string name, int client_fd)
 {
 	for(size_t i = 0; i < this->_users_list.size(); i++)
 	{
-		if ((this->_users_list[i]->get_name() == name || this->_users_list[i]->get_name() == name + "\r")
+		if ((this->_users_list[i]->get_name() == name || (this->_users_list[i]->get_name() + "\r") == name)
 			&& client_fd != this->_users_list[i]->get_fd())
 			return false;
 	}

@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 13:45:07 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:57:25 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void	user(Server& server, int client_fd, std::string name, std::string IP, std::
 	send(user.get_fd(), host_msg.c_str(), host_msg.length(), 0);
 	send(user.get_fd(), created_msg.c_str(), created_msg.length(), 0);
 	send(user.get_fd(), motd_msg.c_str(), motd_msg.length(), 0);
+
+	std::stringstream str_fd;
+	str_fd << client_fd;
+	server.send_to_all(":Client" + str_fd.str() + " NICK " + user.get_name() + "\r\n");
 };
 
 //command PING <arg>
