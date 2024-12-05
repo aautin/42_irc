@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 15:16:48 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:37:20 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ class Server
 		void	remove_channel(Channel *channel);
 		void	add_user(User *user);
 		void	remove_user(User *user);
-		bool	check_nick(std::string name);
+		bool	check_nick(std::string name, int client_fd);
 
 		void	send_to_all(std::string arg);
 

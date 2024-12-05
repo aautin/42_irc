@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 13:02:15 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:44:10 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,16 +86,6 @@ int main(int ac, char **av)
 						server.pollfds.push_back(client_pollfd);
 						server.clients.push_back(newClient);
 						server.add_user(new User(newClient.fd));
-
-						// IRC Handshake Messages
-						std::string welcome_msg = ":AlKi 001 " + server.get_user(newClient.fd).get_name() + " :Welcome to Discord2.0\r\n";
-						std::string host_msg = ":AlKi 002 " + server.get_user(newClient.fd).get_name() + " :Your host is AlKi, running version 1.0\r\n";
-						std::string created_msg = ":AlKi 003 " + server.get_user(newClient.fd).get_name() + " :This server was created today\r\n";
-						std::string motd_msg = ":AlKi 372 " + server.get_user(newClient.fd).get_name() + " :- Welcome to the server !\r\n";
-						send(newClient.fd, welcome_msg.c_str(), welcome_msg.length(), 0);
-						send(newClient.fd, host_msg.c_str(), host_msg.length(), 0);
-						send(newClient.fd, created_msg.c_str(), created_msg.length(), 0);
-						send(newClient.fd, motd_msg.c_str(), motd_msg.length(), 0);
 					}
 					else
 					{ // Read from a client
