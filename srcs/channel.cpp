@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 14:56:15 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 17:11:19 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/channel.hpp"
+#include "ft_irc.hpp"
 
 Channel::Channel()
 {

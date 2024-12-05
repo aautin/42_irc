@@ -3,20 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+         #
+#    By: aautin <aautin@student.42.fr >             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 13:43:51 by kpoilly           #+#    #+#              #
-#    Updated: 2024/11/26 15:45:12 by kpoilly          ###   ########.fr        #
+#    Updated: 2024/12/05 17:10:40 by aautin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 			= ircserv
 
-HEAD			= ./includes/ft_irc.hpp \
-				  ./includes/server.hpp ./includes/channel.hpp \
-				  ./includes/user.hpp ./includes/client.hpp
+HEAD			= includes
 
-M_FILES 		= main.cpp utils.cpp server.cpp channel.cpp user.cpp parsing.cpp \
+M_FILES 		= Message.cpp main.cpp utils.cpp server.cpp channel.cpp user.cpp parsing.cpp \
 				  commands.cpp
 M_SRCS			= $(addprefix ./objs/, $(M_FILES))
 M_OBJECTS 		= $(M_SRCS:%.cpp=%.o)
@@ -32,18 +30,18 @@ CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98
 all:			$(NAME)
 
 .cpp.o:
-				@$(CC) $(CFLAGS) -c $< -o ${<:.cpp=.o}
+				@$(CC) $(CFLAGS) -I$(HEAD) -c $< -o ${<:.cpp=.o}
 
 ./objs/%.o:./srcs/%.cpp
 				@mkdir -p ./objs
-				@$(CC) $(CFLAGS) -c $< -o $@
+				@$(CC) $(CFLAGS) -I$(HEAD) -c $< -o $@
 				
 $(NAME):		$(M_OBJECTS) $(B_OBJECTS) $(HEAD)
-				@$(CC) $(CFLAGS) -I ./ -o $(NAME) $(M_OBJECTS) $(B_OBJECTS)
+				@$(CC) $(CFLAGS) -I$(HEAD) -o $(NAME) $(M_OBJECTS) $(B_OBJECTS)
 				@echo "\033c\033[0;32mMandatory part compiled.\033[0;37m"
 
 bonus:			fclean $(M_OBJECTS) $(B_OBJECTS) $(HEAD)
-						@$(CC) $(CFLAGS) -I ./includes/ -o $(NAME) $(M_OBJECTS) $(B_OBJECTS) \
+						@$(CC) $(CFLAGS) -I$(HEAD) -o $(NAME) $(M_OBJECTS) $(B_OBJECTS) \
 				@echo "\033c\033[0;32mBonus part compiled.\033[0;37m"
 							
 clean:

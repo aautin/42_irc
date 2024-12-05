@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 15:08:38 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 16:39:17 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ class Channel
 		std::string _topic;
 		std::string _password;
 
-		bool		_inv_only;
-		bool		_restr_topic;
-		size_t		_limit;
+		// bool		_inv_only;
+		// bool		_restr_topic;
+		// size_t		_limit;
 		
 		std::vector<std::string> _invited_users;
 

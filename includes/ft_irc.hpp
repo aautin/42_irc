@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 14:36:55 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 17:13:19 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <iostream>
 # include <sstream>
+# include <exception>
 # include <cstring>
 # include <vector>
 # include <sys/socket.h>
@@ -30,9 +31,9 @@
 # include <signal.h>
 
 # include "server.hpp"
-# include "client.hpp"
 # include "channel.hpp"
 # include "user.hpp"
+# include "Message.hpp"
 
 # define DEFAULT_IRC_PORT	6667
 # define MAX_CLIENTS_NB		5
@@ -59,7 +60,6 @@ void	parsing(Server& server, int client_fd, std::string cmd);
 //utils
 void	stoc(int client_fd, std::string msg);
 void	manage_signals(void);
-void 	disconnectServer(Server &server);
 
 //commands
 void	cap(int client_fd, std::string arg);

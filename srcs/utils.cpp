@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:29:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 13:01:12 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 17:29:09 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_irc.hpp"
+#include "ft_irc.hpp"
 
 extern Server* glob_serv;
 
@@ -25,7 +25,7 @@ void	ft_quit(int signal)
 {
 	(void)signal;
 	std::cout << "\033[1;31m[SERV]\033[0m Closing server..." << std::endl;
-	disconnectServer(*glob_serv);
+	glob_serv->disconnectServer();
 	glob_serv->~Server();
 	exit(0);
 };

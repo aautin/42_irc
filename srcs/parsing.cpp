@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 14:29:31 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 17:09:49 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_irc.hpp"
+#include "ft_irc.hpp"
 
 void	parsing(Server& server, int client_fd, std::string cmd)
 {
