@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 15:29:00 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:02:15 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void disconnectServer(Server &server)
 	for (; pollfds < server.pollfds.end(); ++pollfds)
 	{
 
-		std::string quit_msg = ":localhost QUIT :Server shutting down\n";
+		std::string quit_msg = ":AlKi QUIT :Server shutting down\n";
 		send(pollfds->fd, quit_msg.c_str(), quit_msg.length(), 0);
 		close(pollfds->fd);
 	}
@@ -30,6 +30,8 @@ void disconnectServer(Server &server)
 	server.clients.clear();
 	server.pollfds.clear();
 }
+
+Server* glob_serv = NULL;
 
 int main(int ac, char **av)
 {	
@@ -45,7 +47,9 @@ int main(int ac, char **av)
 		port = DEFAULT_IRC_PORT;
 	}
 
+	manage_signals();
 	Server server(port);
+	glob_serv = &server; //tempo, juste pour test les signals.
 
 	while (server.clients.size() <= MAX_CLIENTS_NB)
 	{
@@ -84,10 +88,10 @@ int main(int ac, char **av)
 						server.add_user(new User(newClient.fd));
 
 						// IRC Handshake Messages
-						std::string welcome_msg = ":localhost 001 " + server.get_user(newClient.fd).get_name() + " :Welcome to Discord2.0\r\n";
-						std::string host_msg = ":localhost 002 " + server.get_user(newClient.fd).get_name() + " :Your host is AlKi, running version 1.0\r\n";
-						std::string created_msg = ":localhost 003 " + server.get_user(newClient.fd).get_name() + " :This server was created today\r\n";
-						std::string motd_msg = ":localhost 372 " + server.get_user(newClient.fd).get_name() + " :- Welcome to the server !\r\n";
+						std::string welcome_msg = ":AlKi 001 " + server.get_user(newClient.fd).get_name() + " :Welcome to Discord2.0\r\n";
+						std::string host_msg = ":AlKi 002 " + server.get_user(newClient.fd).get_name() + " :Your host is AlKi, running version 1.0\r\n";
+						std::string created_msg = ":AlKi 003 " + server.get_user(newClient.fd).get_name() + " :This server was created today\r\n";
+						std::string motd_msg = ":AlKi 372 " + server.get_user(newClient.fd).get_name() + " :- Welcome to the server !\r\n";
 						send(newClient.fd, welcome_msg.c_str(), welcome_msg.length(), 0);
 						send(newClient.fd, host_msg.c_str(), host_msg.length(), 0);
 						send(newClient.fd, created_msg.c_str(), created_msg.length(), 0);
