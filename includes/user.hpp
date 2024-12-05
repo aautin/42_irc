@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:53 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 16:26:04 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:24:20 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ class User
 		~User();
 
 		std::string	get_name();
+		std::string	get_IP();
+		std::string	get_real();
 		int			get_fd();
 
 		void		set_name(std::string name);

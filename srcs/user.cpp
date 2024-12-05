@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 16:26:17 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:24:58 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ User::User(int fd): _clientfd(fd)
 {
 	std::stringstream str_fd;
 	str_fd << fd;
-	this->_name = "client" + str_fd.str();
+	this->_name = "Client" + str_fd.str();
 	this->_ipAddress = "127.0.0.1";
 	this->_realname = "";
 };
@@ -37,6 +37,16 @@ User::~User(){};
 std::string	User::get_name()
 {
 	return this->_name;
+};
+
+std::string	User::get_IP()
+{
+	return this->_ipAddress;
+};
+
+std::string	User::get_real()
+{
+	return this->_realname;
 };
 
 int		User::get_fd()

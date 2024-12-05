@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 13:57:25 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:26:56 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,23 @@ void	motd(Server &server, int client_fd)
 	else
 		stoc(client_fd, "375" + server.get_user(client_fd).get_name() + " :Message of the Day \r\n372 :" +
 		server.get_motd() + "\r\n376 " + server.get_user(client_fd).get_name() + " :End of MOTD.\r\n");
+};
+
+void	whois(Server &server, int client_fd, std::string arg)
+{
+	User& user = server.get_user(client_fd);
+
+	if (arg.empty())
+	{
+		stoc(client_fd, ERR_NONICKNAMEGIVEN + user.get_name() + " :No nickname given.\r\n");
+		return;
+	}
+	
+	//check si le nickname existe sinon
+	//stoc(client_fd, ERR_NOSUCHNICK + user.get_name() + " :Unknown nickame.\r\n");
+
+	stoc(client_fd, RPL_WHOISUSER + user.get_name() + " " + arg + " " + arg
+		 + " " + user.get_IP() + " * :" + user.get_real() + "\r\n");
+	//afficher les details des channels sur lequel le user est.
+	stoc(client_fd, RPL_ENDOFWHOIS + user.get_name() + " " + arg + " :End of /WHOIS list.\r\n");
 };

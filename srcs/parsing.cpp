@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/11/26 16:38:34 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:29:31 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ void	parsing(Server& server, int client_fd, std::string cmd)
 		version(client_fd);
 	else if (split[0] == "MOTD")
 		motd(server, client_fd);
+	else if (split[0] == "WHOIS")
+		whois(server, client_fd, split[1]);
 };

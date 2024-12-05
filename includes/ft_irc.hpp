@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 12:56:39 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:32:14 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,15 @@
 
 # define RPL_VERSION		"1.0"
 # define RPL_ISUPPORT		"005"
+# define RPL_WHOISUSER		"311"
+# define RPL_WHOISCHANNELS	"319"
+# define RPL_ENDOFWHOIS		"318"
 
 //errors
 # define ERR_NICKNAMEINUSE		"433"
 # define ERR_NONICKNAMEGIVEN	"431"
 # define ERR_NOSUCHNICK 		"401"
+# define ERR_NOSUCHCHANNEL		"403"
 
 class Server;
 
@@ -61,5 +65,6 @@ void	version(int client_fd);
 void	motd(Server &server, int client_fd);
 void	user(Server& server, int client_fd, std::string name, std::string IP, std::string real);
 void	nick(Server& server, int client_fd, std::string arg);
+void	whois(Server &server, int client_fd, std::string arg);
 
 #endif
