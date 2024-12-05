@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 14:32:14 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:36:55 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@
 # define DEFAULT_IRC_PORT	6667
 # define MAX_CLIENTS_NB		5
 
+//codes
 # define RPL_VERSION		"1.0"
 # define RPL_ISUPPORT		"005"
 # define RPL_WHOISUSER		"311"
 # define RPL_WHOISCHANNELS	"319"
 # define RPL_ENDOFWHOIS		"318"
+# define RPL_CHANNELMODEIS	"324"
+# define RPL_UMODEIS		"221"
 
 //errors
 # define ERR_NICKNAMEINUSE		"433"
