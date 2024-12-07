@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:09:59 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/07 18:08:01 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,13 @@ Message& Message::operator=(const Message& copy)
 	return *this;
 };
 //------
+
+//Utils
+std::string Message::get_content()
+{
+	std::string							params;
+	std::vector<std::string>::const_iterator	it;
+	for (it = _parameters.begin(); it< _parameters.end(); ++it)
+		params += *it;
+	return _prefix + _command + params;
+};

@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 16:37:47 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/07 18:05:46 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class Message
 		std::string					_prefix;	// optional
 		std::string					_command;	// e.g. JOIN, PRIVMSG, PING
 		std::vector<std::string>	_parameters;// e.g. message content
-	
+
 	public:
 		//Constructors-Destructors
 		Message(std::string const & message);
@@ -32,6 +32,9 @@ class Message
 		
 		//Operator overloads
 		Message& operator=(const Message& copy);
+
+		//Utils
+		std::string	get_content();
 
 		//Exceptions
 		class Parsing : public std::exception {

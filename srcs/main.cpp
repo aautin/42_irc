@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:33:22 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/07 19:39:08 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,20 @@ int	main(int ac, char **av)
 			if (poll_status <= 0)
 				continue;
 
-			for (size_t pollfd_i = 0; pollfd_i < server.get_pollfd().size(); ++pollfd_i) {
+			std::vector<pollfd> pollfd_list = server.get_pollfd_list();
+			std::vector<pollfd>::iterator it = pollfd_list.begin();
+			std::vector<pollfd>::iterator end = pollfd_list.end();
+			for (; it < end; ++it) {
 				try
 				{
-					server.handle_poll(pollfd_i);
+					std::cout << "handle poll" << std::endl;
+					server.handle_poll(*it);
 				}
 				catch (Server::UserQuit)
 				{
-					server.user_quit(pollfd_i);
+					server.user_quit(*it);
 					std::cout << "User disconnected.\n";
-					--pollfd_i;
+					--it;
 				}
 				catch (std::exception)
 				{

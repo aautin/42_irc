@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:30:06 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/07 19:20:50 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,20 @@ class Server
 		std::vector<User*>		get_users_list();
 		User&					get_user(int fd);
 		std::string				get_motd();
-		std::vector<pollfd>		get_pollfd() const;
+		pollfd&					get_pollfd(int fd);
+		std::vector<pollfd>		get_pollfd_list() const;
 
 		//Utils
 		int		open_poll();
-		void	handle_poll(int pollfd_i);
-		void	communicate(User* user);
-		void	user_quit(int user_index);
+		void	handle_poll(pollfd it);
+		void	communicate(User & user);
+		void	user_quit(pollfd it);
 
 
 		void	add_channel(Channel *channel);
 		void	remove_channel(Channel *channel);
 		void	add_user(User *user);
-		void	remove_user(User *user);
+		void	remove_user(int fd);
 		bool	check_nick(std::string name, int client_fd);
 
 		void	send_to_all(std::string arg);

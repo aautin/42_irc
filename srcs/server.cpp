@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:29:48 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/07 19:39:46 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,28 @@ std::vector<User*> Server::get_users_list()
 	return this->_users_list;
 };
 
+pollfd& Server::get_pollfd(int fd)
+{
+	std::vector<pollfd>::iterator it;
+	for(it = this->_pollfd.begin(); it < this->_pollfd.end(); ++it)
+	{
+		pollfd& pollfd = *it;
+		if (pollfd.fd == fd)
+			return pollfd;
+	};
+	return this->_pollfd.at(0);
+};
+
 User& Server::get_user(int fd)
 {
-	for(size_t i = 0; i < this->_users_list.size(); i++)
+	std::vector<User*>::iterator it;
+	for(it = this->_users_list.begin(); it < this->_users_list.end(); ++it)
 	{
-		if (this->_users_list[i]->get_fd() == fd)
-			return *_users_list[i];
+		User* user = *it;
+		if (user->get_fd() == fd)
+			return *user;
 	};
-	return *_users_list[0];
+	return *_users_list.at(0);
 };
 
 std::string Server::get_motd()
@@ -127,7 +141,7 @@ std::string Server::get_motd()
 	return this->_motd;
 };
 
-std::vector<pollfd> Server::get_pollfd() const
+std::vector<pollfd> Server::get_pollfd_list() const
 {
 	return this->_pollfd;
 };
@@ -135,16 +149,17 @@ std::vector<pollfd> Server::get_pollfd() const
 //Utils
 int Server::open_poll()
 {
-	return poll(this->_pollfd.data(), this->_pollfd.size(), -1); // -1: no timeout
+	return poll(this->_pollfd.data(), this->_pollfd.size(), 100); // -1: no timeout
 }
 
-void Server::handle_poll(int pollfd_i)
+void Server::handle_poll(pollfd it)
 {
-	if (this->_pollfd[pollfd_i].revents & POLLIN) { // There is something to read
-		if (this->_pollfd[pollfd_i].fd == this->_fd) { // Read from server = new user to accept
-			unsigned int	size;
-			struct sockaddr	address;
+	if (it.revents & POLLIN) { // There is something to read
+		if (it.fd == this->_fd) { // Read from server = new user to accept
+			sockaddr address;
+    		socklen_t size = sizeof(address); // Declare and initialize the size variable.
 
+    		memset(&address, 0, sizeof(address)); // Clear the address structure.
 			int	fd = accept(this->_fd, &address, &size);
 			if (fd < 0)
 			{
@@ -154,9 +169,8 @@ void Server::handle_poll(int pollfd_i)
 			this->add_user(new User(fd));
 		}
 		else { // Read from user
-			int user_i = pollfd_i - 1;
 			char buffer[1024];
-			ssize_t bytes_read = recv(this->_users_list[user_i]->get_fd(), buffer, sizeof(buffer), 0);
+			ssize_t bytes_read = recv(it.fd, buffer, sizeof(buffer), 0);
 
 			if (bytes_read <= 0) // Disconnection message
 				throw UserQuit();
@@ -164,35 +178,41 @@ void Server::handle_poll(int pollfd_i)
 			{
 				buffer[bytes_read] = '\0';
 
-				std::string new_buffer = _users_list[user_i]->get_buffer() + buffer;
-				this->_users_list[user_i]->set_buffer(new_buffer);
+				std::string new_buffer = get_user(it.fd).get_buffer() + buffer;
+				get_user(it.fd).set_buffer(new_buffer);
+
 				if (new_buffer.find('\n') != std::string::npos
 					|| new_buffer.find('\r') != std::string::npos)
 				{
-					this->communicate(this->_users_list[user_i]);
-					this->_users_list[user_i]->set_buffer("");
+					this->communicate(get_user(it.fd));
+					this->get_user(it.fd).set_buffer("");
 				}
 			}
 		}
 	}
 }
 
-void Server::communicate(User* user)
+void Server::communicate(User & user)
 {
-	Message message(user->get_buffer());
+	Message message(user.get_buffer());
+
+	std::cout << user.get_fd() << ": " << message.get_content();
 
 	// here, read the user message, apply the command(s) and answer what's needed...
 }
 
-void Server::user_quit(int user_index)
+void Server::user_quit(pollfd it)
 {
-	int pollfd_index = user_index + 1;
+	close(it.fd);
+	
+	std::vector<pollfd>::iterator iterator;
+	for(iterator = this->_pollfd.begin(); iterator < this->_pollfd.end(); ++iterator)
+	{
+		if (iterator->fd == it.fd)
+			this->_pollfd.erase(iterator);
+	}
 
-	close(this->_pollfd[pollfd_index].fd);
-	this->_pollfd.erase(this->_pollfd.begin() + pollfd_index);
-
-	delete this->_users_list[user_index];
-	this->_users_list.erase(this->_users_list.begin() + user_index);
+	this->remove_user(it.fd);
 };
 
 void Server::add_channel(Channel *channel)
@@ -219,16 +239,18 @@ void	Server::add_user(User *user)
 	this->_pollfd.push_back(user_pollfd);
 };
 
-void	Server::remove_user(User *user)
+void	Server::remove_user(int fd)
 {
-	for (size_t i = 0; i < this->_users_list.size(); i++)
+	std::vector<User*>::iterator it;
+	for(it = this->_users_list.begin(); it < this->_users_list.end(); ++it)
 	{
-		if (this->_users_list[i] == user)
+		User* user = *it;
+		if (user->get_fd() == fd)
 		{
-			this->_users_list.erase(this->_users_list.begin() + i);
-			break;
+			delete user;
+			this->_users_list.erase(it);
 		}
-	}
+	};
 };
 
 bool	Server::check_nick(std::string name, int client_fd)

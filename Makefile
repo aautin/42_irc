@@ -6,7 +6,7 @@
 #    By: aautin <aautin@student.42.fr >             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 13:43:51 by kpoilly           #+#    #+#              #
-#    Updated: 2024/12/05 17:10:40 by aautin           ###   ########.fr        #
+#    Updated: 2024/12/07 19:25:48 by aautin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ B_FILES 		=
 B_SRCS			= $(addprefix ./objs/bonus/, $(B_FILES))
 B_OBJECTS 		= $(B_SRCS:%.cpp=%.o)
 
-RM 						= @rm -f
-CC 						= c++
-CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98
+RM 				= @rm -f
+CC 				= c++
+CFLAGS 			= -Wall -Wextra -Werror -MMD -std=c++98 -g3
 
 all:			$(NAME)
 
