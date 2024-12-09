@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:29:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:29:09 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 15:17:22 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	ft_quit(int signal)
 {
 	(void)signal;
 	std::cout << "\033[1;31m[SERV]\033[0m Closing server..." << std::endl;
-	glob_serv->disconnectServer();
-	glob_serv->~Server();
+	//glob_serv->disconnectServer(); --> segfault
+	//glob_serv->~Server(); --> segfault
+	close(glob_serv->get_servfd());
 	exit(0);
 };
 

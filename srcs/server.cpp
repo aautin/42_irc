@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/07 19:39:46 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 15:15:59 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,6 @@ void Server::handle_poll(pollfd it)
 			else // Other messages
 			{
 				buffer[bytes_read] = '\0';
-
 				std::string new_buffer = get_user(it.fd).get_buffer() + buffer;
 				get_user(it.fd).set_buffer(new_buffer);
 
@@ -187,6 +186,14 @@ void Server::handle_poll(pollfd it)
 					this->communicate(get_user(it.fd));
 					this->get_user(it.fd).set_buffer("");
 				}
+
+				//TEMPO
+				std::string cmd;
+				std::istringstream stream(buffer);
+				while (std::getline(stream, cmd))
+ 				parsing(*this, it.fd, cmd);
+				//FIN TEMPO
+				
 			}
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/07 19:39:08 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 15:17:39 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ int	main(int ac, char **av)
 	}
 	
 	try {
+		manage_signals();
 		Server server(port, av[1]);
+		glob_serv = &server;
 
 		while (server.get_users_list().size() <= 3)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:11:14 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 15:13:46 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,3 +104,29 @@ void	whois(Server &server, int client_fd, std::string arg)
 	//afficher les details des channels sur lequel le user est.
 	stoc(client_fd, RPL_ENDOFWHOIS + user.get_name() + " " + arg + " :End of /WHOIS list.\r\n");
 };
+void	pass(Server &server, int client_fd, std::string arg)
+{
+	User& user = server.get_user(client_fd);
+	
+	if (server.get_password() != "" && arg != server.get_password())
+	{
+		stoc(client_fd, "464 " + user.get_name() + " :Password incorrect.\r\n");
+		server.remove_user(user.get_fd());
+		//deconnecter le client et son pollfd (les remove des vector et les "desaccepter" ?)
+	}
+};
+
+//OPs restantes:
+//PRIVMSG
+//MODE
+//WHO
+//QUIT
+
+//+ Channel OPs:
+//JOIN
+//PART
+//TOPIC
+//NAMES
+//LIST
+//INVITE
+//KICK
