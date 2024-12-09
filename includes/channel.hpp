@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:04:33 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:21:05 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ class Channel
 
 		void	join(User& user, std::string password);
 		void	send_connected_users(User& user);
+		void	who_cmd(Server& server, int client_fd);
 };
 
 #endif

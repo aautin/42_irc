@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:10:00 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:30:22 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	motd(Server &server, int client_fd)
 		server.get_motd() + "\r\n376 " + server.get_user(client_fd).get_name() + " :End of MOTD.\r\n");
 };
 
-//command WHOIS <arg>
+//command WHOIS <nicknameorchannel>
 void	whois(Server &server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);
@@ -108,7 +108,7 @@ void	whois(Server &server, int client_fd, std::string arg)
 	//afficher les details des channels sur lequel le user est.
 	stoc(client_fd, RPL_ENDOFWHOIS + user.get_name() + " " + arg + " :End of /WHOIS list.\r\n");
 };
-//command PASS <arg>
+//command PASS <password>
 void	pass(Server &server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);
@@ -120,6 +120,12 @@ void	pass(Server &server, int client_fd, std::string arg)
 		//deconnecter le client et son pollfd (les remove des vector et les "desaccepter" ?)
 	}
 };
+
+//command WHO <nameofachannel>
+void	who(Server& server, int client_fd, std::string arg)
+{
+	server.get_channel(arg).who_cmd(server, client_fd);
+}
 
 //OPs restantes:
 //PRIVMSG

@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:11:19 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:28:37 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 Server::Server(int port, std::string const & password)
 {
 //Open socket on a file descriptor
+	this->_ip = "127.0.0.1";
 	this->_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->_fd < 0)
 	{
@@ -92,6 +93,11 @@ int Server::get_servfd()
 	return this->_fd;
 };
 
+std::string Server::get_ip()
+{
+	return this->_ip;
+};
+
 int Server::get_port() const
 {
 	return this->_port;
@@ -134,6 +140,18 @@ User& Server::get_user(int fd)
 			return *user;
 	};
 	return *_users_list.at(0);
+};
+
+Channel& Server::get_channel(std::string name)
+{
+	std::vector<Channel*>::iterator it;
+	for(it = this->_channels_list.begin(); it < this->_channels_list.end(); ++it)
+	{
+		Channel* channel = *it;
+		if (channel->get_name() == name)
+			return *channel;
+	};
+	return *_channels_list.at(0);
 };
 
 std::string Server::get_motd()

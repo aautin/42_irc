@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:10:28 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:27:56 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ class Server
 		int						_port;
 		int						_socket_options;
 		sockaddr_in 			_address;
+		std::string				_ip;
 		std::string				_password;
 		std::string				_motd;
 		
@@ -40,11 +41,13 @@ class Server
 	
 		//Getters
 		int						get_servfd();
+		std::string				get_ip();
 		int						get_port() const;
 		std::string				get_password();
 		std::vector<Channel*>	get_channels_list();
 		std::vector<User*>		get_users_list();
 		User&					get_user(int fd);
+		Channel&				get_channel(std::string name);
 		std::string				get_motd();
 		pollfd&					get_pollfd(int fd);
 		std::vector<pollfd>		get_pollfd_list() const;

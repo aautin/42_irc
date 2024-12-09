@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:05:27 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:26:03 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,23 @@ void	Channel::send_connected_users(User& user)
 	};
 	stoc(user.get_fd(), tosend + "\r\n");
 	stoc(user.get_fd(), "366 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " " + this->get_name() + " :End of /NAMES list\r\n");
+	
+};
+
+void	Channel::who_cmd(Server& server, int client_fd)
+{
+	User& user = server.get_user(client_fd);
+	
+	for (size_t i = 0; i < this->connected_users.size(); i++)
+	{
+		std::string tosend = "352 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " " + this->get_name() + " "
+		+ this->connected_users[i]->get_name() + " " + this->connected_users[i]->get_IP() + " "
+		+ server.get_ip() + " " + this->connected_users[i]->get_name() + "H";
+
+		if (this->is_op(*(this->connected_users[i])))
+			tosend += "@";
+		stoc(user.get_fd(), tosend + " :0" + this->connected_users[i]->get_real() + "\r\n");		
+	};
+	stoc(user.get_fd(), "315 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " :End of /NAMES list\r\n");
 	
 };

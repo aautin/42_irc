@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:00:23 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:30:43 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void	motd(Server &server, int client_fd);
 void	user(Server& server, int client_fd, std::string name, std::string IP, std::string real);
 void	nick(Server& server, int client_fd, std::string arg);
 void	whois(Server &server, int client_fd, std::string arg);
+void	who(Server& server, int client_fd, std::string arg);
 
 #endif
