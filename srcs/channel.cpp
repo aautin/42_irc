@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 15:29:01 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 15:56:43 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,19 @@ Channel::~Channel()
 {
 	this->_invited_users.clear();
 	this->_connected_users.clear();
+	//delete et clear les diffeents vector
+};
+
+void	Channel::_add_user(User& user)
+{
+	this->_connected_users.push_back(&user);	
+};
+void	Channel::_remove_user(User& user)
+{
+	for (std::vector<User*>::iterator it = this->_connected_users.begin(); it != this->_connected_users.end();)
+	{
+		if ((**it).get_fd() == user.get_fd())
+			this->_connected_users.erase(it);
+		it++;
+	};
 };
