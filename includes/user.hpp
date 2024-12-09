@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:53 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:08:19 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:06:51 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ class User
 		int				_clientfd;
 
 		std::string		_buffer;
+		
+		std::vector<Channel*>	_joined_channels;
 
 	public:
 		User(int fd);
@@ -40,6 +42,9 @@ class User
 		void		set_IP(std::string IP);
 		void		set_real(std::string real);
 		void		set_fd(int fd);
+
+		void		join_channel(Channel& channel);
+		void		leave_channel(Channel& channel);
 };
 
 #endif

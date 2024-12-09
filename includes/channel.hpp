@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 15:53:15 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:36:52 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,25 @@ class Channel
 		bool		_restr_topic;
 		size_t		_limit;
 		
-		std::vector<std::string> _invited_users;
-		std::vector<User*> _connected_users;
+		std::vector<std::string>	_invited_users;
+		std::vector<User*> 			_op_users;
 
 		void	_add_user(User& user);
 		void	_remove_user(User& user);
 
 	public:
+		std::vector<User*> 			connected_users;
 
 		Channel();
 		Channel(const Channel& copy);
 		Channel& operator=(const Channel& copy);
 		~Channel();
+
+		std::string		get_name();
+		bool			is_op(User& user);
+
+		void	join(User& user, std::string password);
+		void	send_connected_users(User& user);
 };
 
 #endif

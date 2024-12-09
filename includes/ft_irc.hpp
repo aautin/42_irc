@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:13:19 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:25:50 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@
 # define ERR_NICKNAMEINUSE		"433"
 # define ERR_NONICKNAMEGIVEN	"431"
 # define ERR_NOSUCHNICK 		"401"
+
 # define ERR_NOSUCHCHANNEL		"403"
+# define ERR_BADCHANNELKEY		"475"
 
 class Server;
 

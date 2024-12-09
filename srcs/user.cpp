@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:11:05 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:09:56 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,19 @@ void User::set_fd(int fd)
 {
 	this->_clientfd = fd;
 	std::cout << "\033[1;31m[SERV]\033[0m user fd: " << fd << std::endl;
+};
+
+void		User::join_channel(Channel& channel)
+{
+	this->_joined_channels.push_back(&channel);
+};
+
+void		User::leave_channel(Channel& channel)
+{
+	for (std::vector<Channel*>::iterator it = this->_joined_channels.begin(); it != this->_joined_channels.end();)
+	{
+		if ((*it) == &channel)
+			this->_joined_channels.erase(it);
+		it++;
+	};
 };
