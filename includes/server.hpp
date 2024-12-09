@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/07 19:20:50 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 17:10:28 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ class Server
 		void	add_user(User *user);
 		void	remove_user(int fd);
 		bool	check_nick(std::string name, int client_fd);
+		bool	nick_exists(std::string name);
 
 		void	send_to_all(std::string arg);
 		void	disconnectServer();

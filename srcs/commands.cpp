@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 15:13:46 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:10:00 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	motd(Server &server, int client_fd)
 		server.get_motd() + "\r\n376 " + server.get_user(client_fd).get_name() + " :End of MOTD.\r\n");
 };
 
+//command WHOIS <arg>
 void	whois(Server &server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);
@@ -96,14 +97,18 @@ void	whois(Server &server, int client_fd, std::string arg)
 		return;
 	}
 	
-	//check si le nickname existe sinon
-	//stoc(client_fd, ERR_NOSUCHNICK + user.get_name() + " :Unknown nickame.\r\n");
+	if (server.nick_exists(arg))
+	{
+		stoc(client_fd, ERR_NOSUCHNICK + user.get_name() + " :Unknown nickame.\r\n");
+		return;
+	}
 
 	stoc(client_fd, RPL_WHOISUSER + user.get_name() + " " + arg + " " + arg
 		 + " " + user.get_IP() + " * :" + user.get_real() + "\r\n");
 	//afficher les details des channels sur lequel le user est.
 	stoc(client_fd, RPL_ENDOFWHOIS + user.get_name() + " " + arg + " :End of /WHOIS list.\r\n");
 };
+//command PASS <arg>
 void	pass(Server &server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);

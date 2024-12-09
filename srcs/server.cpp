@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 15:15:59 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:11:19 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,16 @@ bool	Server::check_nick(std::string name, int client_fd)
 			return false;
 	}
 	return true;
+};
+
+bool	Server::nick_exists(std::string name)
+{
+	for(size_t i = 0; i < this->_users_list.size(); i++)
+	{
+		if (this->_users_list[i]->get_name() == name)
+			return true;
+	}
+	return false;
 };
 
 void	Server::send_to_all(std::string arg)
