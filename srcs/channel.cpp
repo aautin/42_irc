@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 16:39:01 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:46:45 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ void	Channel::_remove_user(User& user)
 std::string	Channel::get_name()
 {
 	return this->_name;	
+};
+
+std::string	Channel::get_topic()
+{
+	return this->_topic;	
 };
 
 bool	Channel::is_op(User& user)
