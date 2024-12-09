@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:30:22 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:35:16 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void	who(Server& server, int client_fd, std::string arg)
 //OPs restantes:
 //PRIVMSG
 //MODE
-//WHO
 //QUIT
 
 //+ Channel OPs:
