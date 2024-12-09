@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 16:25:50 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:00:23 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 
 # define ERR_NOSUCHCHANNEL		"403"
 # define ERR_BADCHANNELKEY		"475"
+# define ERR_INVITEONLYCHAN		"473"
+# define ERR_CHANNELISFULL		"471"
 
 class Server;
 

@@ -6,13 +6,13 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 16:46:45 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 17:05:27 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-Channel::Channel(): _name("Undefined"), _topic(""), _password(""), _inv_only(false), _restr_topic(false), _limit(-1)
+Channel::Channel(): _name("Undefined"), _topic(""), _password(""), _inv_only(false), _restr_topic(false), _limit(0)
 {
 };
 Channel::Channel(const Channel& copy){*this = copy;};
@@ -71,11 +71,33 @@ bool	Channel::is_op(User& user)
 	return false;
 };
 
+bool	Channel::is_invited(User& user)
+{
+	for (std::vector<std::string>::iterator it = this->_invited_users.begin(); it != this->_invited_users.end();)
+	{
+		if (*it == user.get_real())
+			return true;
+		it++;
+	};
+	return false;
+};
+
 void	Channel::join(User &user, std::string password)
 {
 		//check si channel en inv only et user invited
+		if (this->_inv_only && !this->is_invited(user))
+		{
+			stoc(user.get_fd(), ERR_INVITEONLYCHAN + user.get_name() + " " + this->get_name() + " :Invite Only (+i).\r\n");
+			return;
+		}
+			
 		//check si channel est limited et si limite pas atteinte
-		
+		if (this->_limit != 0 && this->connected_users.size() >= this->_limit)
+		{
+			stoc(user.get_fd(), ERR_CHANNELISFULL + user.get_name() + " " + this->get_name() + " :Channel is full (+l).\r\n");
+			return;
+		}
+			
 		//Check if password needed or not (if yes, is the right password given)
 		if(this->_password.empty() || password == this->_password)
 		{
@@ -86,7 +108,7 @@ void	Channel::join(User &user, std::string password)
 		}
 		else
 		{
-			stoc(user.get_fd(), ERR_BADCHANNELKEY + user.get_name() + " " + this->get_name() + " :Password mismatch (+k)\r\n");
+			stoc(user.get_fd(), ERR_BADCHANNELKEY + user.get_name() + " " + this->get_name() + " :Password mismatch (+k).\r\n");
 			return;
 		}
 };
