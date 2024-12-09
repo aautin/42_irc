@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:28:37 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:34:32 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ Server::Server(int port, std::string const & password)
 	this->_address.sin_port = htons(this->_port);
 	this->_address.sin_addr.s_addr = INADDR_ANY;
 	this->_password = password;
-	this->_motd = "Bienvenue sur Discord 2.0!";
+	this->_motd = ":AlKi 372 Bienvenue sur Discord 2.0!";
 
 	//Add socket options
 	this->_socket_options = 1;
@@ -240,21 +240,35 @@ void Server::user_quit(pollfd it)
 	this->remove_user(it.fd);
 };
 
-void Server::add_channel(Channel *channel)
+void Server::add_channel(std::string name, std::string password)
 {
-	this->_channels_list.push_back(channel);
+	Channel *toadd = new Channel(name);
+	this->_channels_list.push_back(toadd);
+	if (!password.empty())
+		toadd->set_password(password);
 };
 
-void	Server::remove_channel(Channel *channel)
+void	Server::remove_channel(std::string name)
 {
 	for (size_t i = 0; i < this->_channels_list.size(); i++)
 	{
-		if (this->_channels_list[i] == channel)
+		if (this->_channels_list[i]->get_name() == name)
 		{
 			this->_channels_list.erase(this->_channels_list.begin() + i);
 			break;
 		}
 	}
+};
+
+bool	Server::channel_exists(std::string name)
+{
+	for (std::vector<Channel*>::iterator it = this->_channels_list.begin(); it != this->_channels_list.end();)
+	{
+		if ((**it).get_name() == name)
+			return true;
+		it++;
+	};
+	return false;
 };
 
 void	Server::add_user(User *user)

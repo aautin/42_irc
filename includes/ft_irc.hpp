@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:30:43 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:21:51 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define RPL_ENDOFWHOIS		"318"
 # define RPL_CHANNELMODEIS	"324"
 # define RPL_UMODEIS		"221"
+# define RPL_NOTOPIC		"331"
+# define RPL_TOPIC			"332"
 
 //errors
 # define ERR_NICKNAMEINUSE		"433"
@@ -73,6 +75,8 @@ void	motd(Server &server, int client_fd);
 void	user(Server& server, int client_fd, std::string name, std::string IP, std::string real);
 void	nick(Server& server, int client_fd, std::string arg);
 void	whois(Server &server, int client_fd, std::string arg);
+void	pass(Server &server, int client_fd, std::string arg);
 void	who(Server& server, int client_fd, std::string arg);
+void	join(Server& server, int client_fd, std::string name, std::string password);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/05 17:09:49 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/09 18:40:52 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,15 @@ void	parsing(Server& server, int client_fd, std::string cmd)
 		motd(server, client_fd);
 	else if (split[0] == "WHOIS")
 		whois(server, client_fd, split[1]);
+	else if (split[0] == "PASS")
+		pass(server, client_fd, split[1]);
+	else if (split[0] == "WHO")
+		who(server, client_fd, split[1]);
+	else if (split[0] == "JOIN")
+	{
+		if (split.size() == 3)
+			join(server, client_fd, split[1], split[2]);
+		else
+			join(server, client_fd, split[1], "");
+	}
 };

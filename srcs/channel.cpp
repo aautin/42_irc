@@ -6,15 +6,14 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:26:03 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:37:43 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-Channel::Channel(): _name("Undefined"), _topic(""), _password(""), _inv_only(false), _restr_topic(false), _limit(0)
-{
-};
+Channel::Channel(std::string name): _name(name), _topic(""), _password(""), _inv_only(false), _restr_topic(false), _limit(0)
+{};
 Channel::Channel(const Channel& copy){*this = copy;};
 
 Channel& Channel::operator=(const Channel& copy)
@@ -60,9 +59,25 @@ std::string	Channel::get_topic()
 	return this->_topic;	
 };
 
+void Channel::set_password(std::string password)
+{
+	this->_password = password;
+};
+
 bool	Channel::is_op(User& user)
 {
 	for (std::vector<User*>::iterator it = this->_op_users.begin(); it != this->_op_users.end();)
+	{
+		if ((**it).get_real() == user.get_real())
+			return true;
+		it++;
+	};
+	return false;
+};
+
+bool	Channel::is_connected(User& user)
+{
+	for (std::vector<User*>::iterator it = this->connected_users.begin(); it != this->connected_users.end();)
 	{
 		if ((**it).get_real() == user.get_real())
 			return true;

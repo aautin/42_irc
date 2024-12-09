@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 17:35:16 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/09 18:41:40 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	pass(Server &server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);
 	
-	if (server.get_password() != "" && arg != server.get_password())
+	if (server.get_password() != "" && arg != server.get_password() && arg !=server.get_password() + "\r")
 	{
 		stoc(client_fd, "464 " + user.get_name() + " :Password incorrect.\r\n");
 		server.remove_user(user.get_fd());
@@ -126,6 +126,26 @@ void	who(Server& server, int client_fd, std::string arg)
 {
 	server.get_channel(arg).who_cmd(server, client_fd);
 }
+//command JOIN <channel> <password>
+void	join(Server& server, int client_fd, std::string name, std::string password)
+{		
+		User& user = server.get_user(client_fd);
+		if (server.channel_exists(name) && !server.get_channel(name).is_connected(user))
+			server.get_channel(name).join(user, password);
+		else if (!server.channel_exists(name))
+		{
+			server.add_channel(name, password);
+			server.get_channel(name).join(user, password);
+		}
+
+		if (!server.get_channel(name).is_connected(user) || !server.channel_exists(name))
+			return ;
+
+		if (server.get_channel(name).get_topic().empty())
+			stoc(client_fd, RPL_NOTOPIC + name + " :No topic set.\r\n");
+		else
+			stoc(client_fd, RPL_TOPIC + user.get_name() + " " + name + " :" + server.get_channel(name).get_topic() + ".\r\n");
+};
 
 //OPs restantes:
 //PRIVMSG
@@ -133,7 +153,6 @@ void	who(Server& server, int client_fd, std::string arg)
 //QUIT
 
 //+ Channel OPs:
-//JOIN
 //PART
 //TOPIC
 //NAMES
