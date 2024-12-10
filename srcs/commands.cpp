@@ -167,6 +167,9 @@ void	part(Server& server, int client_fd, std::string channel, std::string reason
 		reason = user.get_name() + " left " + channel + ".";
 	server.get_channel(channel).part(user, reason);
 	user.leave_channel(server.get_channel(channel));
+
+	if(server.get_channel(channel).get_nb_users_str() == "0")
+		server.remove_channel(channel);
 };
 
 void	list(Server& server, int client_fd, std::string channel)
@@ -234,6 +237,9 @@ void	invite(Server& server, int client_fd, std::string targetname, std::string c
 	Channel& channel = server.get_channel(channelname);
 	User& user = server.get_user(client_fd);
 	User& target = server.get_user(targetname);
+
+	if (!server.nick_exists(targetname) || !server.channel_exists(channelname))
+		return;
 
 	if(!channel.is_connected(user))
 		stoc(client_fd, ERR_NOTONCHANNEL + user.get_name() + " " + channelname + " :You're not connected on this channel.\r\n");
