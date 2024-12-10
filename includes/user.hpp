@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:53 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 16:06:51 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:28:07 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ class User
 		std::string	get_IP();
 		std::string	get_real();
 		int			get_fd();
+		std::vector<Channel*> get_joined();
 
 		void		set_buffer(std::string const & content);
 		void		set_name(std::string name);

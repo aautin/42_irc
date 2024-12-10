@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:53:28 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:28:12 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ std::string	User::get_real()
 int		User::get_fd()
 {
 	return this->_clientfd;
+};
+
+std::vector<Channel*> User::get_joined()
+{
+	return this->_joined_channels;
 };
 
 

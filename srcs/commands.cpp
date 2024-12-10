@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 16:39:43 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:28:59 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	nick(Server& server, int client_fd, std::string arg)
 	}
 	user.set_name(arg);
 	server.send_to_all(":" + currNick + " NICK " + user.get_name() + "\r\n");
-	//Afficher un truc sur tous les channels
+	for (size_t i = 0; i < user.get_joined().size(); i++)
+		user.get_joined()[i]->who_cmd(server, client_fd);
 };
 
 //command USER <nickname> <IP Address> <realname>
