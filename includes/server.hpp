@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 18:27:24 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:37:15 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ class Server
 		void	handle_poll(pollfd it);
 		void	communicate(User & user);
 		void	user_quit(pollfd it);
-
 
 		void	add_channel(std::string name, std::string password);
 		void	remove_channel(std::string name);

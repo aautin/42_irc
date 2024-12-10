@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 18:21:51 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:50:51 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define ERR_BADCHANNELKEY		"475"
 # define ERR_INVITEONLYCHAN		"473"
 # define ERR_CHANNELISFULL		"471"
+# define ERR_NOTONCHANNEL		"442"
 
 class Server;
 
@@ -80,5 +81,6 @@ void	whois(Server &server, int client_fd, std::string arg);
 void	pass(Server &server, int client_fd, std::string arg);
 void	who(Server& server, int client_fd, std::string arg);
 void	join(Server& server, int client_fd, std::string name, std::string password);
+void	part(Server& server, int client_fd, std::string channel, std::string reason);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:11:52 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:52:58 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ void	Channel::_remove_user(User& user)
 {
 	for (std::vector<User*>::iterator it = this->connected_users.begin(); it != this->connected_users.end();)
 	{
-		if ((**it).get_fd() == user.get_fd())
+		if ((**it).get_name() == user.get_name())
+		{
 			this->connected_users.erase(it);
+			return;
+		}
 		it++;
 	};
 };
@@ -129,6 +132,12 @@ void	Channel::join(User &user, std::string password)
 		}
 };
 
+void	Channel::part(User &user, std::string msg)
+{
+	this->send_to_all(":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " PART " + this->_name + " :" + msg + "\r\n");
+	this->_remove_user(user);
+};
+
 void	Channel::send_connected_users(User& user)
 {
 	std::string tosend = "353 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + "=" + this->get_name() + ":";
@@ -159,4 +168,10 @@ void	Channel::who_cmd(Server& server, int client_fd)
 	};
 	stoc(user.get_fd(), "315 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " :End of /NAMES list\r\n");
 	
+};
+
+void	Channel::send_to_all(std::string msg)
+{
+	for (size_t i = 0; i < this->connected_users.size(); i++)
+		stoc(this->connected_users[i]->get_fd(), ":" + this->connected_users[i]->get_name() + " " + msg);	
 };

@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 16:09:56 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:53:28 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,11 @@ void		User::leave_channel(Channel& channel)
 {
 	for (std::vector<Channel*>::iterator it = this->_joined_channels.begin(); it != this->_joined_channels.end();)
 	{
-		if ((*it) == &channel)
+		if ((*it)->get_name() == channel.get_name())
+		{
 			this->_joined_channels.erase(it);
+			return;
+		}
 		it++;
 	};
 };

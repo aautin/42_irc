@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 18:40:52 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:50:38 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,12 @@ void	parsing(Server& server, int client_fd, std::string cmd)
 			join(server, client_fd, split[1], split[2]);
 		else
 			join(server, client_fd, split[1], "");
+	}
+	else if (split[0] == "PART")
+	{
+		if (split.size() == 3)
+			part(server, client_fd, split[1], split[2]);
+		else
+			part(server, client_fd, split[1], "");
 	}
 };

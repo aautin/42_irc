@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 18:30:06 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:38:38 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ class Channel
 		bool			is_invited(User& user);
 
 		void	join(User& user, std::string password);
+		void	part(User& user, std::string part_msg);
 		void	send_connected_users(User& user);
 		void	who_cmd(Server& server, int client_fd);
+		void	send_to_all(std::string msg);
 };
 
 #endif
