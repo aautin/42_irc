@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 18:37:43 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:11:52 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ bool	Channel::is_op(User& user)
 {
 	for (std::vector<User*>::iterator it = this->_op_users.begin(); it != this->_op_users.end();)
 	{
-		if ((**it).get_real() == user.get_real())
+		if ((**it).get_name() == user.get_name())
 			return true;
 		it++;
 	};
@@ -79,7 +79,7 @@ bool	Channel::is_connected(User& user)
 {
 	for (std::vector<User*>::iterator it = this->connected_users.begin(); it != this->connected_users.end();)
 	{
-		if ((**it).get_real() == user.get_real())
+		if ((**it).get_name() == user.get_name())
 			return true;
 		it++;
 	};
@@ -90,7 +90,7 @@ bool	Channel::is_invited(User& user)
 {
 	for (std::vector<std::string>::iterator it = this->_invited_users.begin(); it != this->_invited_users.end();)
 	{
-		if (*it == user.get_real())
+		if (*it == user.get_name())
 			return true;
 		it++;
 	};
@@ -119,7 +119,7 @@ void	Channel::join(User &user, std::string password)
 			user.join_channel(*this);
 			this->_add_user(user);
 			this->send_connected_users(user);
-			std::cout << user.get_name() << " joined " << this->_name << std::endl;
+			std::cout << SERV << user.get_name() << " joined " << this->_name << std::endl;
 			return;
 		}
 		else
