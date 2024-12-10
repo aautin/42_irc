@@ -70,6 +70,7 @@ class Channel
 		void	send_connected_users(User& user);
 		void	who_cmd(Server& server, int client_fd);
 		void	send_to_all(std::string msg);
+		void	user_to_all(int sender_fd, std::string msg);
 };
 
 #endif

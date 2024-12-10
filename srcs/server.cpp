@@ -142,6 +142,18 @@ User& Server::get_user(int fd)
 	return *_users_list.at(0);
 };
 
+User& Server::get_user(std::string name)
+{
+	std::vector<User*>::iterator it;
+	for(it = this->_users_list.begin(); it < this->_users_list.end(); ++it)
+	{
+		User* user = *it;
+		if (user->get_name() == name)
+			return *user;
+	};
+	return *_users_list.at(0);
+};
+
 Channel& Server::get_channel(std::string name)
 {
 	std::vector<Channel*>::iterator it;

@@ -206,3 +206,12 @@ void	Channel::send_to_all(std::string msg)
 	for (size_t i = 0; i < this->connected_users.size(); i++)
 		stoc(this->connected_users[i]->get_fd(), msg);	
 };
+
+void	Channel::user_to_all(int sender_fd, std::string msg)
+{
+	for (size_t i = 0; i < this->connected_users.size(); i++)
+	{
+		if (this->connected_users[i]->get_fd() != sender_fd)
+			stoc(this->connected_users[i]->get_fd(), msg);	
+	}
+};

@@ -47,6 +47,7 @@ class Server
 		std::vector<Channel*>	get_channels_list();
 		std::vector<User*>		get_users_list();
 		User&					get_user(int fd);
+		User&					get_user(std::string name);
 		Channel&				get_channel(std::string name);
 		std::string				get_motd();
 		pollfd&					get_pollfd(int fd);

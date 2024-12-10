@@ -81,7 +81,7 @@ void	version(int client_fd)
 void	motd(Server &server, int client_fd)
 {
 	if (server.get_motd().empty())
-		stoc(client_fd, "422" + server.get_user(client_fd).get_name() + " :No MOTD set\r\n");
+		stoc(client_fd, "422" + server.get_user(client_fd).get_name() + " :No MOTD set.\r\n");
 	else
 		stoc(client_fd, "375" + server.get_user(client_fd).get_name() + " :Message of the Day \r\n372 :" +
 		server.get_motd() + "\r\n376 " + server.get_user(client_fd).get_name() + " :End of MOTD.\r\n");
@@ -124,7 +124,7 @@ void	pass(Server &server, int client_fd, std::string arg)
 	
 	if (server.get_password() != "" && arg != server.get_password() && arg !=server.get_password() + "\r")
 	{
-		stoc(client_fd, "464 " + user.get_name() + " :Password incorrect.\r\n");
+		stoc(client_fd, "464 " + user.get_name() + " :Incorrect password.\r\n");
 		server.remove_user(user.get_fd());
 		//deconnecter le client et son pollfd (les remove des vector et les "desaccepter" ?)
 	}
@@ -151,9 +151,9 @@ void	join(Server& server, int client_fd, std::string name, std::string password)
 			return ;
 
 		if (server.get_channel(name).get_topic().empty())
-			stoc(client_fd, RPL_NOTOPIC + name + " :No topic set for " + name + "\r\n");
+			stoc(client_fd, RPL_NOTOPIC + name + " :No topic set for " + name + ".\r\n");
 		else
-			stoc(client_fd, RPL_TOPIC + user.get_name() + " " + name + " :" + server.get_channel(name).get_topic() + ".\r\n");
+			stoc(client_fd, RPL_TOPIC + user.get_name() + " " + name + " :" + server.get_channel(name).get_topic() + "\r\n");
 };
 
 void	part(Server& server, int client_fd, std::string channel, std::string reason)
@@ -179,7 +179,55 @@ void	list(Server& server, int client_fd, std::string channel)
 	stoc(client_fd, RPL_LISTEND + user.get_name() + " :End of /LIST\r\n");
 };
 
-//void	privmsg(Server& server, int client_fd, std::string msg)
+void	privmsg(Server& server, int client_fd, std::string args)
+{
+	User& user = server.get_user(client_fd);
+	if (args.find(":") == std::string::npos)
+	{
+		stoc(client_fd, ERR_NORECIPIENT + user.get_name() + " :No recipient given.\r\n");
+		return;
+	}
+
+	std::string	targets = (args.substr(0, args.find(':', 0)));
+	targets.erase(0, 9);
+	std::string	msg = args.substr(args.find(':'));
+	msg.erase(0, 1);
+
+	std::cout << "targets: " << targets << std::endl;
+	std::cout << "msg: " << msg << std::endl;
+
+	if (msg.empty())
+	{
+		stoc(client_fd, ERR_NOTEXTTOSEND + user.get_name() + " :No text to send.\r\n");
+		return;
+	}
+
+	std::vector<std::string> target;
+	unsigned long start = 0, end = 0;
+	while ((start = targets.find_first_not_of(',', end)) != std::string::npos) 
+	{
+		end = targets.find(',', start);
+		target.push_back(targets.substr(start, end - start));
+	}
+
+	for (size_t i = 0; i < target.size(); i++)
+	{
+		if (server.nick_exists(target[i]))
+			stoc( server.get_user(target[i]).get_fd(), ":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " PRIVMSG "
+			+ target[i] + " :" + msg + "\r\n");
+		else if (server.channel_exists(target[i]))
+		{
+			Channel& channel = server.get_channel(target[i]);
+			if (channel.is_connected(user))
+				channel.user_to_all(client_fd, ":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " PRIVMSG "
+				+ target[i] + " :" + msg + "\r\n");
+			else
+				stoc(client_fd, ERR_CANNOTSENDTOCHAN + user.get_name() + " " + channel.get_name() + " :Cannot reach channel.\r\n");
+		}
+		else
+			stoc(client_fd, ERR_NOSUCHNICK + user.get_name() + " " + target[i] + " :No such Nick/Channel.\r\n");
+	}
+};
 
 //OPs restantes:
 //MODE

@@ -68,6 +68,10 @@
 # define ERR_CHANNELISFULL		"471 "
 # define ERR_NOTONCHANNEL		"442 "
 
+# define ERR_NORECIPIENT		"411 "
+# define ERR_NOTEXTTOSEND		"412 "
+# define ERR_CANNOTSENDTOCHAN	"404 "
+
 class Server;
 
 void	parsing(Server& server, int client_fd, Message input);
@@ -89,5 +93,6 @@ void	who(Server& server, int client_fd, std::string arg);
 void	join(Server& server, int client_fd, std::string name, std::string password);
 void	part(Server& server, int client_fd, std::string channel, std::string reason);
 void	list(Server& server, int client_fd, std::string channel);
+void	privmsg(Server& server, int client_fd, std::string args);
 
 #endif

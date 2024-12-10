@@ -50,4 +50,6 @@ void	parsing(Server& server, int client_fd, Message input)
 	}
 	else if (input._command == "LIST")
 		list(server, client_fd, input._parameters[0]);
+	else if (input._command == "PRIVMSG")
+		privmsg(server, client_fd, input.get_content());
 };

@@ -67,5 +67,5 @@ std::string Message::get_content()
 	std::vector<std::string>::const_iterator	it;
 	for (it = _parameters.begin(); it< _parameters.end(); ++it)
 		params += *it;
-	return _prefix + _command + params;
+	return _prefix + " " + _command + " " + params;
 };
