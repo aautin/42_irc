@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:49:55 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 22:22:21 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void	cap(int client_fd, std::string arg)
 {
 	if (arg == "LS")
-		stoc(client_fd, "CAP * LS:\r\n");
+		stoc(client_fd, "CAP * LS :\r\n");
 	else if (arg == "LIST")
-		stoc(client_fd, "CAP * LIST:\r\n");
+		stoc(client_fd, "CAP * LIST :\r\n");
 };
 
 //Command: NICK <arg>
@@ -125,8 +125,6 @@ void	pass(Server &server, int client_fd, std::string arg)
 	if (server.get_password() != "" && arg != server.get_password() && arg !=server.get_password() + "\r")
 	{
 		stoc(client_fd, "464 " + user.get_name() + " :Password incorrect.\r\n");
-		server.remove_user(user.get_fd());
-		//deconnecter le client et son pollfd (les remove des vector et les "desaccepter" ?)
 	}
 };
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:42:25 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 23:30:55 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,9 +165,51 @@ std::vector<pollfd> Server::get_pollfd_list() const
 };
 
 //Utils
+void	Server::loop()
+{
+	while (true)
+	{
+		int poll_status = this->open_poll();
+		if (poll_status == -1)
+			throw std::exception();
+
+		std::vector<pollfd>::iterator it = _pollfd.begin();
+		for (; poll_status > 0 && it != _pollfd.end(); --poll_status) {
+			bool	clientDisconnect = false;
+			if (it->revents == 0)
+			{
+				++it;
+				++poll_status;
+				continue;
+			}
+			try
+			{
+				this->handle_poll(*it);
+			}
+			catch (Server::UserQuit)
+			{
+				it = this->user_quit(it);
+				clientDisconnect = true;
+				std::cout << "User disconnected.\n";
+			}
+			catch (std::runtime_error)
+			{
+				continue;
+			}
+			catch (std::exception)
+			{
+				throw;
+			}
+			if (!clientDisconnect)
+				++it;
+		}
+		
+	}
+}
+
 int Server::open_poll()
 {
-	return poll(this->_pollfd.data(), this->_pollfd.size(), 100); // -1: no timeout
+	return poll(this->_pollfd.data(), this->_pollfd.size(), -1); // -1: no timeout
 }
 
 void Server::handle_poll(pollfd it)
@@ -188,18 +230,21 @@ void Server::handle_poll(pollfd it)
 		}
 		else { // Read from user
 			char buffer[1024];
-			ssize_t bytes_read = recv(it.fd, buffer, sizeof(buffer), 0);
+			ssize_t bytes_read = recv(it.fd, buffer, sizeof(buffer) - 1, 0);
 
 			if (bytes_read <= 0) // Disconnection message
+			{
+				if (bytes_read == -1)
+					std::perror("recv");
 				throw UserQuit();
-			else // Other messages
+			}
+			else // Messages
 			{
 				buffer[bytes_read] = '\0';
 				std::string new_buffer = get_user(it.fd).get_buffer() + buffer;
 				get_user(it.fd).set_buffer(new_buffer);
 
-				if (new_buffer.find('\n') != std::string::npos
-					|| new_buffer.find('\r') != std::string::npos)
+				if (std::strstr(new_buffer.c_str(), "\r\n") != NULL)
 				{
 					this->communicate(get_user(it.fd));
 					this->get_user(it.fd).set_buffer("");
@@ -209,31 +254,30 @@ void Server::handle_poll(pollfd it)
 	}
 }
 
+
 void Server::communicate(User & user)
 {
-	std::string cmd;
-	std::istringstream stream(user.get_buffer());
-	//std::cout << "LINE: " << user.get_buffer() << std::endl;
-	while (std::getline(stream, cmd))
+	std::size_t	pos = 0;
+	while (true)
 	{
-		//std::cout << "CMD: " << cmd << std::endl;
-		Message message(cmd);
+		std::string	buf = user.get_buffer();
+		std::size_t	end = buf.find("\r\n", pos);
+		if (end == std::string::npos) break;
+
+		std::string	cmd_line = buf.substr(pos, end - pos);
+		Message message(cmd_line);
 		parsing(*this, user.get_fd(), message);
+		pos = end + 1;
 	}
+	user.set_buffer(user.get_buffer().substr(pos));
 }
 
-void Server::user_quit(pollfd it)
+std::vector<pollfd>::iterator Server::user_quit(std::vector<pollfd>::iterator & it)
 {
-	close(it.fd);
-	
-	std::vector<pollfd>::iterator iterator;
-	for(iterator = this->_pollfd.begin(); iterator < this->_pollfd.end(); ++iterator)
-	{
-		if (iterator->fd == it.fd)
-			this->_pollfd.erase(iterator);
-	}
+	close(it->fd);
 
-	this->remove_user(it.fd);
+	this->remove_user(it->fd);
+	return this->_pollfd.erase(it);
 };
 
 void Server::add_channel(std::string name, std::string password)
@@ -287,6 +331,7 @@ void	Server::remove_user(int fd)
 		{
 			delete user;
 			this->_users_list.erase(it);
+			return;
 		}
 	};
 };

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:17:53 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:28:07 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 22:29:07 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ class User
 		std::string		_ipAddress;
 		std::string		_realname;
 		int				_clientfd;
+		bool			_is_authenticated;
 
 		std::string		_buffer;
 		
@@ -31,6 +32,7 @@ class User
 		User(int fd);
 		~User();
 
+		bool		is_authenticated();
 		std::string	get_buffer();
 		std::string	get_name();
 		std::string	get_IP();
@@ -38,6 +40,7 @@ class User
 		int			get_fd();
 		std::vector<Channel*> get_joined();
 
+		void		authenticate();
 		void		set_buffer(std::string const & content);
 		void		set_name(std::string name);
 		void		set_IP(std::string IP);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:20:17 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 19:36:20 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,29 @@ Message& Message::operator=(const Message& copy)
 };
 //------
 
+std::string Message::get_prefix() const
+{
+	return _prefix;
+};
+std::string Message::get_command() const
+{
+	return _command;
+};
+std::vector<std::string> Message::get_parameters() const
+{
+	return _parameters;
+};
+
+
 //Utils
 std::string Message::get_content()
 {
 	std::string							params;
 	std::vector<std::string>::const_iterator	it;
 	for (it = _parameters.begin(); it< _parameters.end(); ++it)
+	{
 		params += *it;
+		
+	}
 	return _prefix + _command + params;
 };
