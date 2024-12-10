@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 16:11:25 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:43:49 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ std::string	Channel::get_nb_users_str()
 
 void Channel::set_password(std::string password)
 {
+	std::cout << SERV << "password for " << this->_name << " is now set to: " << password << std::endl;
 	this->_password = password;
 };
 

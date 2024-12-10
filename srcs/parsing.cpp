@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:11:37 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:44:32 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void	parsing(Server& server, int client_fd, Message input)
 		who(server, client_fd, input._parameters[0]);
 	else if (input._command == "JOIN")
 	{
-		if (input._parameters.size() == 3)
+		if (input._parameters.size() == 2)
 			join(server, client_fd, input._parameters[0], input._parameters[1]);
 		else
-			join(server, client_fd, input._parameters[0], "coucou\r");
+			join(server, client_fd, input._parameters[0], "");
 	}
 	else if (input._command == "PART")
 	{
-		if (input._parameters.size() == 3)
+		if (input._parameters.size() == 2)
 			part(server, client_fd, input._parameters[0], input._parameters[1]);
 		else
 			part(server, client_fd, input._parameters[0], "");

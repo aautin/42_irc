@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:36:05 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:42:25 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ void Server::add_channel(std::string name, std::string password)
 	std::cout << SERV << "New channel " << name << " created!" << std::endl;
 	Channel *toadd = new Channel(name);
 	this->_channels_list.push_back(toadd);
-	if (!(password.empty()))
+	if (!password.empty())
 		toadd->set_password(password);
 };
 
