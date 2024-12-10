@@ -6,53 +6,48 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:50:38 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:11:37 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-void	parsing(Server& server, int client_fd, std::string cmd)
+void	parsing(Server& server, int client_fd, Message input)
 {
-	std::cout << "\033[1;35m[RECV<-" << client_fd << "]\033[0m" << cmd << std::endl;
-	std::vector<std::string> split;
-	unsigned long start = 0, end = 0;
-	while ((start = cmd.find_first_not_of(' ', end)) != std::string::npos) 
-	{
-		end = cmd.find(' ', start);
-		split.push_back(cmd.substr(start, end - start));
-	}
+	std::cout << "\033[1;35m[RECV<-" << client_fd << "]\033[0m" << input.get_content() << std::endl;
 	
-	if (split[0] == "CAP")
-		cap(client_fd, split[1]);
-	else if (split[0] == "NICK")
-		nick(server, client_fd, split[1]);
-	else if (split[0] == "USER")
-		user(server, client_fd, split[1], split[3], split[2]);
-	else if (split[0] == "PING")
-		pong(client_fd, split[1]);
-	else if (split[0] == "VERSION")
+	if (input._command == "CAP")
+		cap(client_fd, input._parameters[0]);
+	else if (input._command == "NICK")
+		nick(server, client_fd, input._parameters[0]);
+	else if (input._command == "USER")
+		user(server, client_fd, input._parameters[0], input._parameters[2], input._parameters[1]);
+	else if (input._command == "PING")
+		pong(client_fd, input._parameters[0]);
+	else if (input._command == "VERSION")
 		version(client_fd);
-	else if (split[0] == "MOTD")
+	else if (input._command == "MOTD")
 		motd(server, client_fd);
-	else if (split[0] == "WHOIS")
-		whois(server, client_fd, split[1]);
-	else if (split[0] == "PASS")
-		pass(server, client_fd, split[1]);
-	else if (split[0] == "WHO")
-		who(server, client_fd, split[1]);
-	else if (split[0] == "JOIN")
+	else if (input._command == "WHOIS")
+		whois(server, client_fd, input._parameters[0]);
+	else if (input._command == "PASS")
+		pass(server, client_fd, input._parameters[0]);
+	else if (input._command == "WHO")
+		who(server, client_fd, input._parameters[0]);
+	else if (input._command == "JOIN")
 	{
-		if (split.size() == 3)
-			join(server, client_fd, split[1], split[2]);
+		if (input._parameters.size() == 3)
+			join(server, client_fd, input._parameters[0], input._parameters[1]);
 		else
-			join(server, client_fd, split[1], "");
+			join(server, client_fd, input._parameters[0], "coucou\r");
 	}
-	else if (split[0] == "PART")
+	else if (input._command == "PART")
 	{
-		if (split.size() == 3)
-			part(server, client_fd, split[1], split[2]);
+		if (input._parameters.size() == 3)
+			part(server, client_fd, input._parameters[0], input._parameters[1]);
 		else
-			part(server, client_fd, split[1], "");
+			part(server, client_fd, input._parameters[0], "");
 	}
+	else if (input._command == "LIST")
+		list(server, client_fd, input._parameters[0]);
 };

@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 15:06:06 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:10:27 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ class Channel
 
 		std::string		get_name();
 		std::string		get_topic();
+		std::string		get_nb_users_str();
 
 		void			set_password(std::string password);
 

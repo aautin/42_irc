@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 15:26:34 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:11:25 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ std::string	Channel::get_name()
 std::string	Channel::get_topic()
 {
 	return this->_topic;	
+};
+
+std::string	Channel::get_nb_users_str()
+{
+	std::stringstream nb_users;
+	nb_users << this->connected_users.size();
+	return nb_users.str();
 };
 
 void Channel::set_password(std::string password)

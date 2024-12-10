@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:50:51 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 16:46:48 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@
 
 class Server;
 
-void	parsing(Server& server, int client_fd, std::string cmd);
+void	parsing(Server& server, int client_fd, Message input);
 
 //utils
 void	stoc(int client_fd, std::string msg);
@@ -82,5 +82,6 @@ void	pass(Server &server, int client_fd, std::string arg);
 void	who(Server& server, int client_fd, std::string arg);
 void	join(Server& server, int client_fd, std::string name, std::string password);
 void	part(Server& server, int client_fd, std::string channel, std::string reason);
+void	list(Server& server, int client_fd, std::string channel);
 
 #endif

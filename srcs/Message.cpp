@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/07 18:08:01 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:20:17 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ Message::Message(std::string const & content)
 	}
 
 	elements.erase(elements.begin());
-	elements.erase(elements.begin());
+	//elements.erase(elements.begin());
 
 	std::vector<std::string>::const_iterator it;
 	for (it = elements.begin(); it < elements.end(); ++it)

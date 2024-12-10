@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 15:25:21 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:12:59 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,15 +203,7 @@ void Server::handle_poll(pollfd it)
 				{
 					this->communicate(get_user(it.fd));
 					this->get_user(it.fd).set_buffer("");
-				}
-
-				//TEMPO
-				std::string cmd;
-				std::istringstream stream(buffer);
-				while (std::getline(stream, cmd))
- 				parsing(*this, it.fd, cmd);
-				//FIN TEMPO
-				
+				}	
 			}
 		}
 	}
@@ -219,11 +211,15 @@ void Server::handle_poll(pollfd it)
 
 void Server::communicate(User & user)
 {
-	Message message(user.get_buffer());
-
-	std::cout << user.get_fd() << ": " << message.get_content();
-
-	// here, read the user message, apply the command(s) and answer what's needed...
+	std::string cmd;
+	std::istringstream stream(user.get_buffer());
+	std::cout << "LINE: " << user.get_buffer() << std::endl;
+	while (std::getline(stream, cmd))
+	{
+		std::cout << "CMD: " << cmd << std::endl;
+		Message message(cmd);
+		parsing(*this, user.get_fd(), message);
+	}
 }
 
 void Server::user_quit(pollfd it)
@@ -247,7 +243,7 @@ void Server::add_channel(std::string name, std::string password)
 	std::cout << SERV << "New channel " << name << " created!" << std::endl;
 	Channel *toadd = new Channel(name);
 	this->_channels_list.push_back(toadd);
-	if (password != "")
+	if (!(password.empty()))
 		toadd->set_password(password);
 };
 
