@@ -242,7 +242,7 @@ void Server::user_quit(pollfd it)
 
 void Server::add_channel(std::string name, std::string password)
 {
-	if (this.channel_exists(name))
+	if (this->channel_exists(name))
 		return;
 	Channel *toadd = new Channel(name);
 	this->_channels_list.push_back(toadd);
