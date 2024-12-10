@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:48:20 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 15:25:01 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	join(Server& server, int client_fd, std::string name, std::string password)
 			return ;
 
 		if (server.get_channel(name).get_topic().empty())
-			stoc(client_fd, RPL_NOTOPIC + name + " :No topic set.\r\n");
+			stoc(client_fd, "331 " + name + " :No topic set.\r\n");
 		else
 			stoc(client_fd, RPL_TOPIC + user.get_name() + " " + name + " :" + server.get_channel(name).get_topic() + ".\r\n");
 };
@@ -154,8 +154,8 @@ void	part(Server& server, int client_fd, std::string channel, std::string reason
 	if (channel.empty() || !server.get_channel(channel).is_connected(user))
 		return;
 	
-	if(reason.empty())
-		reason = user.get_name() + "left " + channel + ".";
+	if(reason == "")
+		reason = user.get_name() + " left " + channel + ".";
 	server.get_channel(channel).part(user, reason);
 	user.leave_channel(server.get_channel(channel));
 };

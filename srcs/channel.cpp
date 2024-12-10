@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:52:58 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 15:26:34 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ void	Channel::_remove_user(User& user)
 		if ((**it).get_name() == user.get_name())
 		{
 			this->connected_users.erase(it);
+			return;
+		}
+		it++;
+	};
+};
+
+void	Channel::_add_op(User& user)
+{
+	this->_op_users.push_back(&user);	
+};
+
+void	Channel::_remove_op(User& user)
+{
+	for (std::vector<User*>::iterator it = this->_op_users.begin(); it != this->_op_users.end();)
+	{
+		if ((**it).get_name() == user.get_name())
+		{
+			this->_op_users.erase(it);
 			return;
 		}
 		it++;
@@ -120,8 +138,11 @@ void	Channel::join(User &user, std::string password)
 		if(this->_password.empty() || password == this->_password)
 		{
 			user.join_channel(*this);
+			if (this->connected_users.size() == 0)
+				this->_add_op(user);
 			this->_add_user(user);
 			this->send_connected_users(user);
+			stoc(user.get_fd(), ":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " JOIN " + this->_name + "\r\n");
 			std::cout << SERV << user.get_name() << " joined " << this->_name << std::endl;
 			return;
 		}
@@ -136,6 +157,8 @@ void	Channel::part(User &user, std::string msg)
 {
 	this->send_to_all(":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " PART " + this->_name + " :" + msg + "\r\n");
 	this->_remove_user(user);
+	if (this->is_op(user))
+		this->_remove_op(user);
 };
 
 void	Channel::send_connected_users(User& user)
@@ -173,5 +196,5 @@ void	Channel::who_cmd(Server& server, int client_fd)
 void	Channel::send_to_all(std::string msg)
 {
 	for (size_t i = 0; i < this->connected_users.size(); i++)
-		stoc(this->connected_users[i]->get_fd(), ":" + this->connected_users[i]->get_name() + " " + msg);	
+		stoc(this->connected_users[i]->get_fd(), msg);	
 };
