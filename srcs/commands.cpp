@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:38:29 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:49:55 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,9 @@ void	list(Server& server, int client_fd, std::string channel)
 	stoc(client_fd, "323 " + user.get_name() + " :End of /LIST\r\n");
 };
 
+//void	privmsg(Server& server, int client_fd, std::string msg)
+
 //OPs restantes:
-//PRIVMSG
 //MODE
 //QUIT
 
