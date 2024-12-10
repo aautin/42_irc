@@ -244,10 +244,14 @@ void Server::add_channel(std::string name, std::string password)
 {
 	if (this->channel_exists(name))
 		return;
+	std::cout << "New channel " << name << " created!" << std::endl;
 	Channel *toadd = new Channel(name);
 	this->_channels_list.push_back(toadd);
 	if (!password.empty())
+	{
 		toadd->set_password(password);
+		std::cout << "Password set. (" << password << ")" << std::endl;
+	}
 };
 
 void	Server::remove_channel(std::string name)

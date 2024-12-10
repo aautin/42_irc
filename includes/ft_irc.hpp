@@ -38,6 +38,8 @@
 # define DEFAULT_IRC_PORT	6667
 # define MAX_CLIENTS_NB		5
 
+# define SERV				"\033[1;31m[SERV]\033[0m"
+
 //codes
 # define RPL_VERSION		"1.0"
 # define RPL_ISUPPORT		"005"

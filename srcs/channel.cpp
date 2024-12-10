@@ -119,6 +119,7 @@ void	Channel::join(User &user, std::string password)
 			user.join_channel(*this);
 			this->_add_user(user);
 			this->send_connected_users(user);
+			std::cout << user.get_name() << " joined " << this->_name << std::endl;
 			return;
 		}
 		else
