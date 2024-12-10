@@ -171,7 +171,7 @@ void	Channel::part(User &user, std::string msg)
 
 void	Channel::send_connected_users(User& user)
 {
-	std::string tosend = "353 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + "=" + this->get_name() + ":";
+	std::string tosend = RPL_NAMREPLY + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + "=" + this->get_name() + ":";
 	for (size_t i = 0; i < this->connected_users.size(); i++)
 	{
 		if (this->is_op(*(this->connected_users[i])))
@@ -179,7 +179,7 @@ void	Channel::send_connected_users(User& user)
 		tosend += this->connected_users[i]->get_name() + " ";	
 	};
 	stoc(user.get_fd(), tosend + "\r\n");
-	stoc(user.get_fd(), "366 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " " + this->get_name() + " :End of /NAMES list\r\n");
+	stoc(user.get_fd(), RPL_ENDOFNAMES + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " " + this->get_name() + " :End of /NAMES list\r\n");
 	
 };
 
@@ -189,15 +189,15 @@ void	Channel::who_cmd(Server& server, int client_fd)
 	
 	for (size_t i = 0; i < this->connected_users.size(); i++)
 	{
-		std::string tosend = "352 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " " + this->get_name() + " "
+		std::string tosend = RPL_WHOREPLY + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " " + this->get_name() + " "
 		+ this->connected_users[i]->get_name() + " " + this->connected_users[i]->get_IP() + " "
-		+ server.get_ip() + " " + this->connected_users[i]->get_name() + "H";
+		+ server.get_ip() + " " + this->connected_users[i]->get_name() + " H";
 
 		if (this->is_op(*(this->connected_users[i])))
 			tosend += "@";
-		stoc(user.get_fd(), tosend + " :0" + this->connected_users[i]->get_real() + "\r\n");		
+		stoc(user.get_fd(), tosend + " :0 " + this->connected_users[i]->get_real() + "\r\n");		
 	};
-	stoc(user.get_fd(), "315 " + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " :End of /NAMES list\r\n");
+	stoc(user.get_fd(), RPL_ENDOFWHO + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " :End of /NAMES list\r\n");
 	
 };
 

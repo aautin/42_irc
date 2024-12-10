@@ -50,6 +50,12 @@
 # define RPL_UMODEIS		"221 "
 # define RPL_NOTOPIC		"331 "
 # define RPL_TOPIC			"332 "
+# define RPL_NAMREPLY		"353 "
+# define RPL_ENDOFNAMES		"366 "
+# define RPL_WHOREPLY		"352 "
+# define RPL_ENDOFWHO		"315 "
+# define RPL_LIST			"322 "
+# define RPL_LISTEND		"323 "
 
 //errors
 # define ERR_NICKNAMEINUSE		"433 "

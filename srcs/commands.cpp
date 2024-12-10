@@ -151,7 +151,7 @@ void	join(Server& server, int client_fd, std::string name, std::string password)
 			return ;
 
 		if (server.get_channel(name).get_topic().empty())
-			stoc(client_fd, "331 " + name + " :No topic set for " + name + "\r\n");
+			stoc(client_fd, RPL_NOTOPIC + name + " :No topic set for " + name + "\r\n");
 		else
 			stoc(client_fd, RPL_TOPIC + user.get_name() + " " + name + " :" + server.get_channel(name).get_topic() + ".\r\n");
 };
@@ -174,9 +174,9 @@ void	list(Server& server, int client_fd, std::string channel)
 	User& user = server.get_user(client_fd);
 	Channel& tolist = server.get_channel(channel);
 
-	stoc(client_fd, "322 " + user.get_name() + " " + tolist.get_name()
+	stoc(client_fd, RPL_LIST + user.get_name() + " " + tolist.get_name()
 		+ " " + tolist.get_nb_users_str() + " :" + "TOPIC: " + tolist.get_topic() + "\r\n");
-	stoc(client_fd, "323 " + user.get_name() + " :End of /LIST\r\n");
+	stoc(client_fd, RPL_LISTEND + user.get_name() + " :End of /LIST\r\n");
 };
 
 //void	privmsg(Server& server, int client_fd, std::string msg)
