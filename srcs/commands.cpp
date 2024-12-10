@@ -196,8 +196,8 @@ void	privmsg(Server& server, int client_fd, std::string args)
 	std::string	msg = args.substr(args.find(':'));
 	msg.erase(0, 1);
 
-	std::cout << "targets: " << targets << std::endl;
-	std::cout << "msg: " << msg << std::endl;
+	// std::cout << "targets: " << targets << std::endl;
+	// std::cout << "msg: " << msg << std::endl;
 
 	if (msg.empty())
 	{
