@@ -156,6 +156,7 @@ void	join(Server& server, int client_fd, std::string name, std::string password)
 			stoc(client_fd, RPL_TOPIC + user.get_name() + " " + name + " :" + server.get_channel(name).get_topic() + "\r\n");
 };
 
+//command PART <channel> <message>
 void	part(Server& server, int client_fd, std::string channel, std::string reason)
 {
 	User& user = server.get_user(client_fd);
@@ -172,6 +173,7 @@ void	part(Server& server, int client_fd, std::string channel, std::string reason
 		server.remove_channel(channel);
 };
 
+//command LIST <channel>
 void	list(Server& server, int client_fd, std::string channel)
 {
 	User& user = server.get_user(client_fd);
@@ -182,6 +184,7 @@ void	list(Server& server, int client_fd, std::string channel)
 	stoc(client_fd, RPL_LISTEND + user.get_name() + " :End of /LIST\r\n");
 };
 
+//command PRIVMSG <targets> <message>
 void	privmsg(Server& server, int client_fd, std::string args)
 {
 	User& user = server.get_user(client_fd);
@@ -232,6 +235,7 @@ void	privmsg(Server& server, int client_fd, std::string args)
 	}
 };
 
+//command INVITE <target> <channel>
 void	invite(Server& server, int client_fd, std::string targetname, std::string channelname)
 {
 	Channel& channel = server.get_channel(channelname);
