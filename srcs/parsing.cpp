@@ -52,4 +52,6 @@ void	parsing(Server& server, int client_fd, Message input)
 		list(server, client_fd, input._parameters[0]);
 	else if (input._command == "PRIVMSG")
 		privmsg(server, client_fd, input.get_content());
+	else if (input._command == "INVITE")
+		invite(server, client_fd, input._parameters[0], input._parameters[1]);
 };

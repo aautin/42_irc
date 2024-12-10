@@ -56,6 +56,7 @@
 # define RPL_ENDOFWHO		"315 "
 # define RPL_LIST			"322 "
 # define RPL_LISTEND		"323 "
+# define RPL_INVITING		"341 "
 
 //errors
 # define ERR_NICKNAMEINUSE		"433 "
@@ -67,6 +68,7 @@
 # define ERR_INVITEONLYCHAN		"473 "
 # define ERR_CHANNELISFULL		"471 "
 # define ERR_NOTONCHANNEL		"442 "
+# define ERR_USERONCHANNEL		"443 "
 
 # define ERR_NORECIPIENT		"411 "
 # define ERR_NOTEXTTOSEND		"412 "
@@ -94,5 +96,6 @@ void	join(Server& server, int client_fd, std::string name, std::string password)
 void	part(Server& server, int client_fd, std::string channel, std::string reason);
 void	list(Server& server, int client_fd, std::string channel);
 void	privmsg(Server& server, int client_fd, std::string args);
+void	invite(Server& server, int client_fd, std::string target, std::string channel);
 
 #endif

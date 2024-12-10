@@ -64,6 +64,8 @@ class Channel
 
 		void			_add_op(User& user);
 		void			_remove_op(User& user);
+		void			add_invited(std::string username);
+		void			remove_invited(std::string username);
 
 		void	join(User& user, std::string password);
 		void	part(User& user, std::string part_msg);

@@ -229,6 +229,24 @@ void	privmsg(Server& server, int client_fd, std::string args)
 	}
 };
 
+void	invite(Server& server, int client_fd, std::string targetname, std::string channelname)
+{
+	Channel& channel = server.get_channel(channelname);
+	User& user = server.get_user(client_fd);
+	User& target = server.get_user(targetname);
+
+	if(!channel.is_connected(user))
+		stoc(client_fd, ERR_NOTONCHANNEL + user.get_name() + " " + channelname + " :You're not connected on this channel.\r\n");
+	else if (channel.is_connected(target))
+		stoc(client_fd, ERR_USERONCHANNEL + user.get_name() + " " + targetname + " " + channelname + " :User already on this channel.\r\n");
+	else
+	{
+		stoc(target.get_fd(), ":" + user.get_name() + " INVITE " + targetname + " " + channelname + "\r\n");
+		channel.add_invited(targetname);
+		stoc(client_fd, RPL_INVITING + user.get_name() + " " + targetname + " " + channelname + "\r\n");
+	}
+};
+
 //OPs restantes:
 //MODE
 //QUIT
@@ -236,5 +254,4 @@ void	privmsg(Server& server, int client_fd, std::string args)
 //+ Channel OPs:
 //TOPIC
 //NAMES
-//INVITE
 //KICK

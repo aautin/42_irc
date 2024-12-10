@@ -39,6 +39,7 @@ void	Channel::_add_user(User& user)
 {
 	this->connected_users.push_back(&user);	
 };
+
 void	Channel::_remove_user(User& user)
 {
 	for (std::vector<User*>::iterator it = this->connected_users.begin(); it != this->connected_users.end();)
@@ -46,6 +47,24 @@ void	Channel::_remove_user(User& user)
 		if ((**it).get_name() == user.get_name())
 		{
 			this->connected_users.erase(it);
+			return;
+		}
+		it++;
+	};
+};
+
+void	Channel::add_invited(std::string username)
+{
+	this->_invited_users.push_back(username);	
+};
+
+void	Channel::remove_invited(std::string username)
+{
+	for (std::vector<std::string>::iterator it = this->_invited_users.begin(); it != this->_invited_users.end();)
+	{
+		if (*it == username)
+		{
+			this->_invited_users.erase(it);
 			return;
 		}
 		it++;
@@ -152,6 +171,8 @@ void	Channel::join(User &user, std::string password)
 			this->send_connected_users(user);
 			stoc(user.get_fd(), ":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " JOIN " + this->_name + "\r\n");
 			std::cout << SERV << user.get_name() << " joined " << this->_name << std::endl;
+			if (is_invited(user))
+				this->remove_invited(user.get_name());
 			return;
 		}
 		else
