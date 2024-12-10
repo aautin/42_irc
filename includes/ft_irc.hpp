@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 16:46:48 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:32:14 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,24 @@
 //codes
 # define RPL_VERSION		"1.0"
 # define RPL_ISUPPORT		"005"
-# define RPL_WHOISUSER		"311"
-# define RPL_WHOISCHANNELS	"319"
-# define RPL_ENDOFWHOIS		"318"
-# define RPL_CHANNELMODEIS	"324"
-# define RPL_UMODEIS		"221"
-# define RPL_NOTOPIC		"331"
-# define RPL_TOPIC			"332"
+# define RPL_WHOISUSER		"311 "
+# define RPL_WHOISCHANNELS	"319 "
+# define RPL_ENDOFWHOIS		"318 "
+# define RPL_CHANNELMODEIS	"324 "
+# define RPL_UMODEIS		"221 "
+# define RPL_NOTOPIC		"331 "
+# define RPL_TOPIC			"332 "
 
 //errors
-# define ERR_NICKNAMEINUSE		"433"
-# define ERR_NONICKNAMEGIVEN	"431"
-# define ERR_NOSUCHNICK 		"401"
+# define ERR_NICKNAMEINUSE		"433 "
+# define ERR_NONICKNAMEGIVEN	"431 "
+# define ERR_NOSUCHNICK 		"401 "
 
-# define ERR_NOSUCHCHANNEL		"403"
-# define ERR_BADCHANNELKEY		"475"
-# define ERR_INVITEONLYCHAN		"473"
-# define ERR_CHANNELISFULL		"471"
-# define ERR_NOTONCHANNEL		"442"
+# define ERR_NOSUCHCHANNEL		"403 "
+# define ERR_BADCHANNELKEY		"475 "
+# define ERR_INVITEONLYCHAN		"473 "
+# define ERR_CHANNELISFULL		"471 "
+# define ERR_NOTONCHANNEL		"442 "
 
 class Server;
 

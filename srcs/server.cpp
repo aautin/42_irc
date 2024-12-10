@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:12:59 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:36:05 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,10 +213,10 @@ void Server::communicate(User & user)
 {
 	std::string cmd;
 	std::istringstream stream(user.get_buffer());
-	std::cout << "LINE: " << user.get_buffer() << std::endl;
+	//std::cout << "LINE: " << user.get_buffer() << std::endl;
 	while (std::getline(stream, cmd))
 	{
-		std::cout << "CMD: " << cmd << std::endl;
+		//std::cout << "CMD: " << cmd << std::endl;
 		Message message(cmd);
 		parsing(*this, user.get_fd(), message);
 	}

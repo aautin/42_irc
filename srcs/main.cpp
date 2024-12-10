@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/09 18:34:52 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:35:30 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av)
 			for (; it < end; ++it) {
 				try
 				{
-					std::cout << "handle poll" << std::endl;
+					//std::cout << "handle poll" << std::endl;
 					server.handle_poll(*it);
 				}
 				catch (Server::UserQuit)

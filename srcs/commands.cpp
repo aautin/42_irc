@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:28:59 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 17:38:29 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	whois(Server &server, int client_fd, std::string arg)
 		return;
 	}
 	
-	if (server.nick_exists(arg))
+	if (!server.nick_exists(arg))
 	{
 		stoc(client_fd, ERR_NOSUCHNICK + user.get_name() + " :Unknown nickame.\r\n");
 		return;
@@ -106,7 +106,15 @@ void	whois(Server &server, int client_fd, std::string arg)
 
 	stoc(client_fd, RPL_WHOISUSER + user.get_name() + " " + arg + " " + arg
 		 + " " + user.get_IP() + " * :" + user.get_real() + "\r\n");
-	//afficher les details des channels sur lequel le user est.
+	std::vector<Channel*> joined = user.get_joined();
+	std::string tosend = RPL_WHOISCHANNELS + user.get_name() + " " + arg + " :";
+	for (size_t i = 0; i < joined.size(); i++)
+	{
+		if (joined[i]->is_op(user))
+			tosend += "@";
+		tosend += joined[i]->get_name() + " ";
+	}
+	stoc(client_fd, tosend + "\r\n");
 	stoc(client_fd, RPL_ENDOFWHOIS + user.get_name() + " " + arg + " :End of /WHOIS list.\r\n");
 };
 //command PASS <password>
