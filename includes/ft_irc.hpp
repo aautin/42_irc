@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:01:18 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:11:48 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@
 # define ERR_BADCHANNELKEY		"475 "
 # define ERR_INVITEONLYCHAN		"473 "
 # define ERR_CHANNELISFULL		"471 "
+# define ERR_USERNOTINCHANNEL	"441 " 
 # define ERR_NOTONCHANNEL		"442 "
 # define ERR_USERONCHANNEL		"443 "
 # define ERR_CHANOPRIVSNEEDED	"482 "

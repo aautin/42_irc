@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:00:47 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:17:09 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ void	kick(Server& server, int client_fd, std::string channelname, std::string ta
 {
 	std::string	msg = args.substr(args.find(':'));
 	msg.erase(0, 1); //removes the ':'
+	msg.erase(msg.size() - 1, 1); //removes the ' '
 
 	User&	user = server.get_user(client_fd);
 	Channel& channel = server.get_channel(channelname);
@@ -314,6 +315,11 @@ void	kick(Server& server, int client_fd, std::string channelname, std::string ta
 	if (!channel.is_connected(user))
 	{
 		stoc(client_fd, ERR_NOTONCHANNEL + user.get_name() + " " + channelname + " :You're not connected on this channel.\r\n");
+		return;
+	}
+	if (!server.nick_exists(target) || !channel.is_connected(server.get_user(target)))
+	{
+		stoc(client_fd, ERR_USERNOTINCHANNEL + target + " " + channelname + " :This user is not connected on this channel.\r\n");
 		return;
 	}
 	
