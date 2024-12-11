@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:52:16 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:58:03 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ void	Channel::_remove_user(User& user)
 		}
 		it++;
 	};
+
+	if (this->is_op(user))
+		this->_remove_op(user);
 };
 
 void	Channel::add_invited(std::string username)

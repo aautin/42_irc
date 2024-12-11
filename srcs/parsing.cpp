@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 13:58:04 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:23:15 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	parsing(Server& server, int client_fd, Message& input)
 		else if (input.get_command() == "QUIT")
 			quit(server, client_fd, input.get_param(0));
 		else if (input.get_command() == "TOPIC")
-			topic(server, client_fd, input.get_content());
+			topic(server, client_fd, input.get_param(0), input.get_content());
+		else if (input.get_command() == "KICK")
+			kick(server, client_fd, input.get_param(0), input.get_param(1), input.get_content());
 	}
 	catch (std::exception& e)
 	{

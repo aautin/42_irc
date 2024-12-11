@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 13:57:09 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:22:33 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ void	quit(Server& server, int client_fd, std::string arg)
 	User& user = server.get_user(client_fd);
 	std::vector<Channel*> connected_chans = user.get_joined();
 
-	arg.erase(0, 1);
+	arg.erase(0, 1);//removes the ':'
 
 	for (size_t i = 0; i < connected_chans.size(); i++)
 	{
@@ -275,15 +275,11 @@ void	quit(Server& server, int client_fd, std::string arg)
 	//remove son pollfd, ou faire ca dans remove_user ?
 };
 
-void	topic(Server& server, int client_fd, std::string args)
+void	topic(Server& server, int client_fd, std::string channelname, std::string args)
 {
 	User&	user = server.get_user(client_fd);
-
-	std::string	channelname = (args.substr(0, args.find(':', 0)));
-	channelname.erase(0, 6);
-	channelname.erase(channelname.size() - 1, 1);
 	std::string	topic = args.substr(args.find(':'));
-	topic.erase(0, 1);
+	topic.erase(0, 1); //removes the ':'
 
 	Channel& channel = server.get_channel(channelname);
 
@@ -300,10 +296,42 @@ void	topic(Server& server, int client_fd, std::string args)
 	channel.set_topic(topic);
 };
 
+void	kick(Server& server, int client_fd, std::string channelname, std::string target, std::string args)
+{
+	std::string	msg = args.substr(args.find(':'));
+	msg.erase(0, 1); //removes the ':'
+	msg.erase(msg.size() - 1, 1); //removes the ' '
+
+	User&	user = server.get_user(client_fd);
+	Channel& channel = server.get_channel(channelname);
+
+	if (!channel.is_op(user))
+	{
+		stoc(client_fd, ERR_CHANOPRIVSNEEDED + user.get_name() + " " + channelname + " :You need to be OP to kick someone on this channel.\r\n");
+		return;
+	}
+	if (!channel.is_connected(user))
+	{
+		stoc(client_fd, ERR_NOTONCHANNEL + user.get_name() + " " + channelname + " :You're not connected on this channel.\r\n");
+		return;
+	}
+	if (!server.nick_exists(target) || !channel.is_connected(server.get_user(target)))
+	{
+		stoc(client_fd, ERR_USERNOTINCHANNEL + target + " " + channelname + " :This user is not connected on this channel.\r\n");
+		return;
+	}
+	
+	channel.send_to_all(":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " KICK " +
+						channelname + " " + target + " :" + msg + "\r\n");
+	channel._remove_user(server.get_user(target));
+	server.get_user(target).leave_channel(channel);
+	
+};
+
+// void	names(Server& server, int client_fd, std::string channelname)
+// {
+	
+// };
+
 //OPs restantes:
 //MODE
-
-//+ Channel OPs:
-//TOPIC
-//NAMES
-//KICK

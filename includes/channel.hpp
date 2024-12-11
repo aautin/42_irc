@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 13:54:21 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:22:20 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ class Channel
 		std::vector<User*> 			_op_users;
 
 		void	_add_user(User& user);
-		void	_remove_user(User& user);
 
 	public:
 		std::vector<User*> 			connected_users;
@@ -56,6 +55,7 @@ class Channel
 		std::string		get_topic();
 		std::string		get_nb_users_str();
 
+		void			_remove_user(User& user);
 		void			set_password(std::string password);
 
 		bool			is_op(User& user);
