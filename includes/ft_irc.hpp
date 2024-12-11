@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_irc.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:22:26 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:27:59 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ class Server;
 void	parsing(Server& server, int client_fd, Message& input);
 
 //utils
-void	stoc(int client_fd, std::string msg);
-void	manage_signals(void);
+void		stoc(int client_fd, std::string msg);
+void		manage_signals(void);
+std::string sttostr(size_t i);
+size_t		strtost(std::string str);
+
 
 //commands
 void	cap(int client_fd, std::string arg);
@@ -104,5 +107,6 @@ void	invite(Server& server, int client_fd, std::string target, std::string chann
 void	quit(Server& server, int client_fd, std::string arg);
 void	topic(Server& server, int client_fd, std::string channelname, std::string args);
 void	kick(Server& server, int client_fd, std::string channelname, std::string target, std::string args);
+void	mode(Server& server, int client_fd, std::string channelname, std::string modes, Message& input);
 
 #endif

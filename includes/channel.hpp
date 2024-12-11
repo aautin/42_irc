@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   channel.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:22:20 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:17:02 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,6 @@
 
 class User;
 class Server;
-
-typedef enum modes
-{
-	INV,	//i	
-	TOPIC,	//t
-	KEY,	//k
-	OP,		//o
-	LIMIT	//l
-} modes;
 
 class Channel
 {
@@ -57,6 +48,7 @@ class Channel
 
 		void			_remove_user(User& user);
 		void			set_password(std::string password);
+		void			set_limit(size_t lim);
 
 		bool			is_op(User& user);
 		bool			is_connected(User& user);
@@ -72,6 +64,9 @@ class Channel
 		void			add_invited(std::string username);
 		void			remove_invited(std::string username);
 		void			set_topic(std::string topic);
+		
+		void			mode_switch(char c);
+
 
 		void	join(User& user, std::string password);
 		void	part(User& user, std::string part_msg);

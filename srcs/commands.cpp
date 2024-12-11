@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:22:33 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:47:45 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,11 +327,53 @@ void	kick(Server& server, int client_fd, std::string channelname, std::string ta
 	server.get_user(target).leave_channel(channel);
 	
 };
+void	mode(Server& server, int client_fd, std::string channelname, std::string modes, Message& input)
+{
+	User&	user = server.get_user(client_fd);
+	Channel& channel = server.get_channel(channelname);
 
-// void	names(Server& server, int client_fd, std::string channelname)
-// {
+	if (!channel.is_op(user))
+	{
+		stoc(client_fd, ERR_CHANOPRIVSNEEDED + user.get_name() + " " + channelname + " :You need to be OP to change mode on this channel.\r\n");
+		return;
+	}
 	
-// };
-
-//OPs restantes:
-//MODE
+	size_t	arg_num = 2;
+	for (size_t i = 1; i < modes.size(); i++)
+	{
+		switch(modes[i])
+		{
+			case 'i':
+				channel.mode_switch(modes[i]);
+				channel.send_to_all(":" + user.get_name() + "!~" + user.get_real() + "@" + user.get_IP()
+									+ " MODE " + channelname + "+" + "i  \r\n");
+				break;
+			
+			case 't':
+				channel.mode_switch(modes[i]);
+				channel.send_to_all(":" + user.get_name() + "!~" + user.get_real() + "@" + user.get_IP()
+									+ " MODE " + channelname + "+" + "t  \r\n");
+				break;
+			
+			case 'k':
+				channel.is_passworded() ? channel.set_password("") : channel.set_password(input.get_param(arg_num++));
+				channel.send_to_all(":" + user.get_name() + "!~" + user.get_real() + "@" + user.get_IP()
+									+ " MODE " + channelname + "+" + "k  \r\n");
+				break;
+			
+			case 'o':
+				channel.is_op(server.get_user(input.get_param(arg_num))) ? channel._remove_op(server.get_user(input.get_param(arg_num))) : channel._add_op(server.get_user(input.get_param(arg_num)));
+				channel.send_to_all(":" + user.get_name() + "!~" + user.get_real() + "@" + user.get_IP()
+									+ " MODE " + channelname + "+" + "o " + input.get_param(arg_num++) + " \r\n");
+				break;
+			
+			case 'l':
+				size_t lim = channel.is_cap_limited() ? 0 : strtost(input.get_param(arg_num++));
+				channel.set_limit(lim);
+				channel.send_to_all(":" + user.get_name() + "!~" + user.get_real() + "@" + user.get_IP()
+									+ " MODE " + channelname + "+" + "l " + sttostr(lim) + " \r\n");
+				break;
+		}
+	};
+	
+};

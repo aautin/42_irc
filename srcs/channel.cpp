@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 13:58:03 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 15:46:05 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ void	Channel::_remove_user(User& user)
 
 	if (this->is_op(user))
 		this->_remove_op(user);
+};
+
+void	Channel::set_limit(size_t lim)
+{
+	this->_limit = lim;
+	std::cout << SERV << "limit for " << this->_name << " is now " << lim << std::endl;
 };
 
 void	Channel::add_invited(std::string username)
@@ -264,4 +270,17 @@ void			Channel::set_topic(std::string topic)
 	this->_topic = topic;
 	for (size_t i = 0; i < this->connected_users.size(); i++)
 		stoc(this->connected_users[i]->get_fd(), RPL_TOPIC + this->connected_users[i]->get_name() + " " + this->_name + " :" + topic + "\r\n");
+};
+
+void			Channel::mode_switch(char c)
+{
+	switch(c)
+	{
+		case 'i':
+			this->_inv_only = !this->_inv_only;
+			break;
+		case 't':
+			this->_restr_topic = !this->_restr_topic;
+			break;
+	}
 };

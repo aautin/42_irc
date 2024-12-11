@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:29:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:20:19 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:26:38 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,20 @@ void	manage_signals(void)
 	sa.sa_handler = &ft_quit;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
+};
+
+std::string sttostr(size_t i)
+{
+	std::ostringstream ss;
+    ss << i;
+    return ss.str();	
+};
+
+size_t	strtost(std::string str)
+{
+	std::istringstream ss(str);
+    size_t ret;
+    ss >> ret;
+    return ret;
 };
 
