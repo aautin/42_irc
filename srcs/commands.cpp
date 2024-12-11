@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:17:09 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:20:30 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,8 +330,10 @@ void	kick(Server& server, int client_fd, std::string channelname, std::string ta
 	
 };
 
+// void	names(Server& server, int client_fd, std::string channelname)
+// {
+	
+// };
+
 //OPs restantes:
 //MODE
-
-//+ Channel OPs:
-//NAMES
