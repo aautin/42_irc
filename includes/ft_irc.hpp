@@ -97,5 +97,6 @@ void	part(Server& server, int client_fd, std::string channel, std::string reason
 void	list(Server& server, int client_fd, std::string channel);
 void	privmsg(Server& server, int client_fd, std::string args);
 void	invite(Server& server, int client_fd, std::string target, std::string channel);
+void	quit(Server& server, int client_fd, std::string arg);
 
 #endif

@@ -257,9 +257,25 @@ void	invite(Server& server, int client_fd, std::string targetname, std::string c
 	}
 };
 
+void	quit(Server& server, int client_fd, std::string arg)
+{
+	User& user = server.get_user(client_fd);
+	std::vector<Channel*> connected_chans = user.get_joined();
+
+	arg.erase(0, 1);
+
+	for (size_t i = 0; i < connected_chans.size(); i++)
+	{
+		connected_chans[i]->part(user, arg + "\r\n");
+		user.leave_channel(*connected_chans[i]);
+		if(connected_chans[i]->get_nb_users_str()  == "0")
+			server.remove_channel(connected_chans[i]->get_name());
+	};
+	server.remove_user(client_fd);
+};
+
 //OPs restantes:
 //MODE
-//QUIT
 
 //+ Channel OPs:
 //TOPIC
