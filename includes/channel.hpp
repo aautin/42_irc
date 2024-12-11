@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 16:10:27 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:42:06 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,17 @@ class Channel
 		bool			is_op(User& user);
 		bool			is_connected(User& user);
 		bool			is_invited(User& user);
+		
+		bool			is_topic_restr();
+		bool			is_passworded();
+		bool			is_invite_only();
+		bool			is_cap_limited();
 
 		void			_add_op(User& user);
 		void			_remove_op(User& user);
 		void			add_invited(std::string username);
 		void			remove_invited(std::string username);
+		void			set_topic(std::string topic);
 
 		void	join(User& user, std::string password);
 		void	part(User& user, std::string part_msg);

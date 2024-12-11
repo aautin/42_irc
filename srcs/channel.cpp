@@ -6,13 +6,13 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:43:49 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:52:16 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
-Channel::Channel(std::string name): _name(name), _topic(""), _password(""), _inv_only(false), _restr_topic(false), _limit(0)
+Channel::Channel(std::string name): _name(name), _topic(""), _password(""), _inv_only(false), _restr_topic(true), _limit(0)
 {};
 Channel::Channel(const Channel& copy){*this = copy;};
 
@@ -145,6 +145,26 @@ bool	Channel::is_invited(User& user)
 	return false;
 };
 
+bool			Channel::is_topic_restr()
+{
+	return this->_restr_topic;
+};
+
+bool			Channel::is_passworded()
+{
+	return !(this->_password.empty());
+};
+
+bool			Channel::is_invite_only()
+{
+	return this->_inv_only;
+};
+
+bool			Channel::is_cap_limited()
+{
+	return !(this->_limit == 0);
+};
+
 void	Channel::join(User &user, std::string password)
 {
 		//check si channel en inv only et user invited
@@ -235,4 +255,10 @@ void	Channel::user_to_all(int sender_fd, std::string msg)
 		if (this->connected_users[i]->get_fd() != sender_fd)
 			stoc(this->connected_users[i]->get_fd(), msg);	
 	}
+};
+void			Channel::set_topic(std::string topic)
+{
+	this->_topic = topic;
+	for (size_t i = 0; i < this->connected_users.size(); i++)
+		stoc(this->connected_users[i]->get_fd(), RPL_TOPIC + this->connected_users[i]->get_name() + " " + this->_name + " :" + topic + "\r\n");
 };

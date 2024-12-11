@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:21:02 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:53:23 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ std::string Message::get_content()
 	std::string							params;
 	std::vector<std::string>::const_iterator	it;
 	for (it = _parameters.begin(); it< _parameters.end(); ++it)
-		params += *it;
+		params += *it + " ";
 	return _prefix + " " + _command + " " + params;
 };
 

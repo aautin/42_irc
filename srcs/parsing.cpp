@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:22:45 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:50:24 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ void	parsing(Server& server, int client_fd, Message& input)
 			invite(server, client_fd, input.get_param(0), input.get_param(1));
 		else if (input._command == "QUIT")
 			quit(server, client_fd, input.get_param(0));
+		else if (input._command == "TOPIC")
+			topic(server, client_fd, input.get_content());
 	}
 	catch (std::exception& e)
 	{
-		stoc(client_fd, ERR_NEEDMOREPARAMS + server.get_user(client_fd).get_name() + " :Not enough parameters given\r\n");
+		stoc(client_fd, ERR_NEEDMOREPARAMS + server.get_user(client_fd).get_name() + " " + input._command +" :Not enough parameters given\r\n");
 		return;
 	}
 };

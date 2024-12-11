@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 11:58:45 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:07:45 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ void	join(Server& server, int client_fd, std::string name, std::string password)
 void	part(Server& server, int client_fd, std::string channel, std::string reason)
 {
 	User& user = server.get_user(client_fd);
+	reason.erase(0, 1); //removes the ':'
 	
 	if (channel.empty() || !server.get_channel(channel).is_connected(user))
 		return;
@@ -195,9 +196,9 @@ void	privmsg(Server& server, int client_fd, std::string args)
 	}
 
 	std::string	targets = (args.substr(0, args.find(':', 0)));
-	targets.erase(0, 9);
+	targets.erase(0, 9); //removes the 'PRIVMSG '
 	std::string	msg = args.substr(args.find(':'));
-	msg.erase(0, 1);
+	msg.erase(0, 1); //removes the ':'
 
 	// std::cout << "targets: " << targets << std::endl;
 	// std::cout << "msg: " << msg << std::endl;
@@ -218,6 +219,7 @@ void	privmsg(Server& server, int client_fd, std::string args)
 
 	for (size_t i = 0; i < target.size(); i++)
 	{
+		target[i].erase(target[i].size() - 1, 1); //removes the ' '
 		if (server.nick_exists(target[i]))
 			stoc( server.get_user(target[i]).get_fd(), ":" + user.get_name() + "!" + user.get_real() + "@" + user.get_IP() + " PRIVMSG "
 			+ target[i] + " :" + msg + "\r\n");
@@ -273,6 +275,31 @@ void	quit(Server& server, int client_fd, std::string arg)
 	};
 	server.remove_user(client_fd);
 	//remove son pollfd, ou faire ca dans remove_user ?
+};
+
+void	topic(Server& server, int client_fd, std::string args)
+{
+	User&	user = server.get_user(client_fd);
+
+	std::string	channelname = (args.substr(0, args.find(':', 0)));
+	channelname.erase(0, 6);
+	channelname.erase(channelname.size() - 1, 1);
+	std::string	topic = args.substr(args.find(':'));
+	topic.erase(0, 1);
+
+	Channel& channel = server.get_channel(channelname);
+
+	if (!channel.is_connected(user))
+	{
+		stoc(client_fd, ERR_NOTONCHANNEL + user.get_name() + " " + channelname + " :You're not connected on this channel.\r\n");
+		return;
+	}
+	if (!channel.is_op(user) && channel.is_topic_restr())
+	{
+		stoc(client_fd, ERR_CHANOPRIVSNEEDED + user.get_name() + " " + channelname + " :You need to be OP to set Topic on this channel.\r\n");
+		return;
+	}
+	channel.set_topic(topic);
 };
 
 //OPs restantes:

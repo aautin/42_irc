@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:21:35 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:50:32 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 # define ERR_CHANNELISFULL		"471 "
 # define ERR_NOTONCHANNEL		"442 "
 # define ERR_USERONCHANNEL		"443 "
+# define ERR_CHANOPRIVSNEEDED	"482 "
 
 # define ERR_NORECIPIENT		"411 "
 # define ERR_NOTEXTTOSEND		"412 "
@@ -100,5 +101,6 @@ void	list(Server& server, int client_fd, std::string channel);
 void	privmsg(Server& server, int client_fd, std::string args);
 void	invite(Server& server, int client_fd, std::string target, std::string channel);
 void	quit(Server& server, int client_fd, std::string arg);
+void	topic(Server& server, int client_fd, std::string args);
 
 #endif
