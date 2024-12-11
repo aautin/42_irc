@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:20:15 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 14:37:15 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 21:12:30 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,11 @@ class Server
 		std::vector<pollfd>		get_pollfd_list() const;
 
 		//Utils
+		void	loop();
 		int		open_poll();
 		void	handle_poll(pollfd it);
 		void	communicate(User & user);
-		void	user_quit(pollfd it);
+		std::vector<pollfd>::iterator	user_quit(std::vector<pollfd>::iterator & it);
 
 		void	add_channel(std::string name, std::string password);
 		void	remove_channel(std::string name);

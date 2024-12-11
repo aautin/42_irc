@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Message.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:21:16 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:54:47 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ class Message
 {
 	private:
 		std::string					_prefix;	// optional
+		std::string					_command;	// e.g. JOIN, PRIVMSG, PING
 		std::vector<std::string>	_parameters;// e.g. message content
 
 	public:
-		std::string					_command;	// e.g. JOIN, PRIVMSG, PING
-		
 		//Constructors-Destructors
 		Message(std::string const & message);
 		~Message();
@@ -37,6 +36,11 @@ class Message
 		std::string	get_content();
 		std::string	get_param(size_t i);
 		int			get_nbparam();
+
+		//Getters
+		std::string					get_prefix() const;
+		std::string					get_command() const;
+		std::vector<std::string>	get_parameters() const;
 
 		//Exceptions
 		class Parsing : public std::exception {

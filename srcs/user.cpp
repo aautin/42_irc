@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:28:12 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 22:28:46 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ User::User(int fd): _clientfd(fd)
 	str_fd << fd;
 	this->_name = "Client" + str_fd.str();
 	this->_realname = "";
+	this->_is_authenticated = false;
 
 	//To be deleted
 	std::cout << "Server accepted a new client:" << std::endl;
@@ -27,6 +28,10 @@ User::User(int fd): _clientfd(fd)
 
 User::~User(){};
 
+bool		User::is_authenticated()
+{
+	return this->_is_authenticated;
+};
 
 //Getters
 std::string User::get_buffer()
@@ -61,6 +66,10 @@ std::vector<Channel*> User::get_joined()
 
 
 //Setters
+void		User::authenticate()
+{
+	this->_is_authenticated = true;
+};
 void User::set_buffer(std::string const & content)
 {
 	this->_buffer = content;

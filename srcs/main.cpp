@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:49:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:35:30 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/10 21:02:26 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,12 @@ int	main(int ac, char **av)
 		manage_signals();
 		Server server(port, av[2]);
 		glob_serv = &server;
+		server.loop();
 
-		while (server.get_users_list().size() <= 3)
-		{
-			int poll_status = server.open_poll();
-			if (poll_status <= 0)
-				continue;
-
-			std::vector<pollfd> pollfd_list = server.get_pollfd_list();
-			std::vector<pollfd>::iterator it = pollfd_list.begin();
-			std::vector<pollfd>::iterator end = pollfd_list.end();
-			for (; it < end; ++it) {
-				try
-				{
-					//std::cout << "handle poll" << std::endl;
-					server.handle_poll(*it);
-				}
-				catch (Server::UserQuit)
-				{
-					server.user_quit(*it);
-					std::cout << "User disconnected.\n";
-					--it;
-				}
-				catch (std::exception)
-				{
-					return EXIT_FAILURE;
-				}
-			}
-		}
-	} catch (std::exception) {}
+	} catch (std::exception)
+	{
+		return EXIT_FAILURE;
+	}
 
 	return EXIT_SUCCESS;
 };

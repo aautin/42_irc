@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:50:24 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:58:04 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,52 +18,52 @@ void	parsing(Server& server, int client_fd, Message& input)
 	
 	try
 	{
-		if (input._command == "CAP")
+		if (input.get_command() == "CAP")
 			cap(client_fd, input.get_param(0));
-		else if (input._command == "NICK")
+		else if (input.get_command() == "NICK")
 			nick(server, client_fd, input.get_param(0));
-		else if (input._command == "USER")
+		else if (input.get_command() == "USER")
 			user(server, client_fd, input.get_param(0), input.get_param(2), input.get_param(1));
-		else if (input._command == "PING")
+		else if (input.get_command() == "PING")
 			pong(client_fd, input.get_param(0));
-		else if (input._command == "VERSION")
+		else if (input.get_command() == "VERSION")
 			version(client_fd);
-		else if (input._command == "MOTD")
+		else if (input.get_command() == "MOTD")
 			motd(server, client_fd);
-		else if (input._command == "WHOIS")
+		else if (input.get_command() == "WHOIS")
 			whois(server, client_fd, input.get_param(0));
-		else if (input._command == "PASS")
+		else if (input.get_command() == "PASS")
 			pass(server, client_fd, input.get_param(0));
-		else if (input._command == "WHO")
+		else if (input.get_command() == "WHO")
 			who(server, client_fd, input.get_param(0));
-		else if (input._command == "JOIN")
+		else if (input.get_command() == "JOIN")
 		{
 			if (input.get_nbparam() == 2)
 				join(server, client_fd, input.get_param(0), input.get_param(1));
 			else
 				join(server, client_fd, input.get_param(0), "");
 		}
-		else if (input._command == "PART")
+		else if (input.get_command() == "PART")
 		{
 			if (input.get_nbparam() == 2)
 				part(server, client_fd, input.get_param(0), input.get_param(1));
 			else
 				part(server, client_fd, input.get_param(0), "");
 		}
-		else if (input._command == "LIST")
+		else if (input.get_command() == "LIST")
 			list(server, client_fd, input.get_param(0));
-		else if (input._command == "PRIVMSG")
+		else if (input.get_command() == "PRIVMSG")
 			privmsg(server, client_fd, input.get_content());
-		else if (input._command == "INVITE")
+		else if (input.get_command() == "INVITE")
 			invite(server, client_fd, input.get_param(0), input.get_param(1));
-		else if (input._command == "QUIT")
+		else if (input.get_command() == "QUIT")
 			quit(server, client_fd, input.get_param(0));
-		else if (input._command == "TOPIC")
+		else if (input.get_command() == "TOPIC")
 			topic(server, client_fd, input.get_content());
 	}
 	catch (std::exception& e)
 	{
-		stoc(client_fd, ERR_NEEDMOREPARAMS + server.get_user(client_fd).get_name() + " " + input._command +" :Not enough parameters given\r\n");
+		stoc(client_fd, ERR_NEEDMOREPARAMS + server.get_user(client_fd).get_name() + " " + input.get_command() +" :Not enough parameters given\r\n");
 		return;
 	}
 };

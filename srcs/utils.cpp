@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:29:34 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 15:37:51 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:20:19 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	ft_quit(int signal)
 	(void)signal;
 	std::cout << "\033[1;31m[SERV]\033[0m Closing server..." << std::endl;
 	//glob_serv->disconnectServer(); --> segfault
-	//glob_serv->~Server(); --> segfault
-	close(glob_serv->get_servfd());
+	glob_serv->~Server();
 	exit(0);
 };
 
@@ -35,7 +34,9 @@ void	manage_signals(void)
 {
 	struct sigaction sa;
 
+	memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = &ft_quit;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
 };
+
