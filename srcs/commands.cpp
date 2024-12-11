@@ -272,6 +272,7 @@ void	quit(Server& server, int client_fd, std::string arg)
 			server.remove_channel(connected_chans[i]->get_name());
 	};
 	server.remove_user(client_fd);
+	//remove son pollfd, ou faire ca dans remove_user ?
 };
 
 //OPs restantes:
