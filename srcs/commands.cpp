@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:22:33 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:34:23 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,8 @@ void	quit(Server& server, int client_fd, std::string arg)
 		if(connected_chans[i]->get_nb_users_str()  == "0")
 			server.remove_channel(connected_chans[i]->get_name());
 	};
-	server.remove_user(client_fd);
+	throw Server::UserQuit();
+	// server.remove_user(client_fd);
 	//remove son pollfd, ou faire ca dans remove_user ?
 };
 

@@ -6,7 +6,7 @@
 /*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:18:28 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:36:03 by aautin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,6 @@ void Server::handle_poll(pollfd it)
 				if (std::strstr(new_buffer.c_str(), "\r\n") != NULL)
 				{
 					this->communicate(get_user(it.fd));
-					this->get_user(it.fd).set_buffer("");
 				}	
 			}
 		}
