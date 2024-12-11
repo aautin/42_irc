@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 14:36:03 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:14:15 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,14 @@ Server::Server(int port, std::string const & password)
 
 Server::~Server()
 {
+	for (size_t i = 0; i < this->_channels_list.size(); ++i)
+		delete this->_channels_list[i];
+	this->_channels_list.clear();
+
 	for (size_t i = 0; i < this->_users_list.size(); ++i)
 		delete this->_users_list[i];
 	this->_users_list.clear();
 
-	for (size_t i = 0; i < this->_channels_list.size(); ++i)
-		delete this->_channels_list[i];
-	this->_channels_list.clear();
 
 	std::vector<pollfd>::iterator pollfd = this->_pollfd.begin();
 	++pollfd;
@@ -204,7 +205,7 @@ void	Server::loop()
 			{
 				it = this->user_quit(it);
 				clientDisconnect = true;
-				std::cout << "User disconnected.\n";
+				std::cout << SERV <<"User disconnected.\n";
 			}
 			catch (std::runtime_error)
 			{

@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 16:17:14 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 15:46:05 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 16:16:10 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ Channel::~Channel()
 {
 	this->_invited_users.clear();
 	this->connected_users.clear();
-	//delete et clear les diffeents vector
+	this->_op_users.clear();
 };
 
 void	Channel::_add_user(User& user)
@@ -82,7 +82,7 @@ void	Channel::remove_invited(std::string username)
 
 void	Channel::_add_op(User& user)
 {
-	this->_op_users.push_back(&user);	
+	this->_op_users.push_back(&user);
 };
 
 void	Channel::_remove_op(User& user)

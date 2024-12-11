@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aautin <aautin@student.42.fr >             +#+  +:+       +#+        */
+/*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 22:28:46 by aautin           ###   ########.fr       */
+/*   Updated: 2024/12/11 16:11:52 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ User::User(int fd): _clientfd(fd)
 	//------
 };
 
-User::~User(){};
+User::~User()
+{
+	this->_joined_channels.clear();
+};
 
 bool		User::is_authenticated()
 {
