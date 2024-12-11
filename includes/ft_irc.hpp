@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 12:50:32 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 14:01:18 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	list(Server& server, int client_fd, std::string channel);
 void	privmsg(Server& server, int client_fd, std::string args);
 void	invite(Server& server, int client_fd, std::string target, std::string channel);
 void	quit(Server& server, int client_fd, std::string arg);
-void	topic(Server& server, int client_fd, std::string args);
+void	topic(Server& server, int client_fd, std::string channelname, std::string args);
+void	kick(Server& server, int client_fd, std::string channelname, std::string target, std::string args);
 
 #endif
