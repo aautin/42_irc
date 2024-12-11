@@ -6,19 +6,31 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 16:02:09 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 16:56:29 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_irc.hpp"
 
 //Command: CAP <arg>
-void	cap(int client_fd, std::string arg)
+void	cap(Server& server, int client_fd, std::string arg)
 {
 	if (arg == "LS")
 		stoc(client_fd, "CAP * LS :\r\n");
 	else if (arg == "LIST")
 		stoc(client_fd, "CAP * LIST :\r\n");
+	else if (arg == "END")
+	{
+		User& user = server.get_user(client_fd);
+		std::string welcome_msg = ":AlKi 001 " + user.get_name() + " :Welcome to Discord2.0\r\n";
+		std::string host_msg = ":AlKi 002 " + user.get_name() + " :Your host is AlKi, running version 1.0\r\n";
+		std::string created_msg = ":AlKi 003 " + user.get_name() + " :This server was created today\r\n";
+		std::string motd_msg = ":AlKi 372 " + user.get_name() + " :- Welcome to the server !\r\n";
+		send(user.get_fd(), welcome_msg.c_str(), welcome_msg.length(), 0);
+		send(user.get_fd(), host_msg.c_str(), host_msg.length(), 0);
+		send(user.get_fd(), created_msg.c_str(), created_msg.length(), 0);
+		send(user.get_fd(), motd_msg.c_str(), motd_msg.length(), 0);
+	}
 };
 
 //Command: NICK <arg>
@@ -50,17 +62,8 @@ void	user(Server& server, int client_fd, std::string name, std::string IP, std::
 	user.set_IP(IP);
 	user.set_real(real);
 
-	std::string welcome_msg = ":AlKi 001 " + user.get_name() + " :Welcome to Discord2.0\r\n";
-	std::string host_msg = ":AlKi 002 " + user.get_name() + " :Your host is AlKi, running version 1.0\r\n";
-	std::string created_msg = ":AlKi 003 " + user.get_name() + " :This server was created today\r\n";
-	std::string motd_msg = ":AlKi 372 " + user.get_name() + " :- Welcome to the server !\r\n";
-	send(user.get_fd(), welcome_msg.c_str(), welcome_msg.length(), 0);
-	send(user.get_fd(), host_msg.c_str(), host_msg.length(), 0);
-	send(user.get_fd(), created_msg.c_str(), created_msg.length(), 0);
-	send(user.get_fd(), motd_msg.c_str(), motd_msg.length(), 0);
-
-	std::stringstream str_fd;
-	str_fd << client_fd;
+	// std::stringstream str_fd;
+	// str_fd << client_fd;
 	//server.send_to_all(":Client" + str_fd.str() + " NICK " + user.get_name() + "\r\n");
 };
 
@@ -122,10 +125,13 @@ void	pass(Server &server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);
 	
-	if (server.get_password() != "" && arg != server.get_password() && arg !=server.get_password() + "\r")
-	{
+	if (arg.empty())
+		stoc(client_fd, "464 " + user.get_name() + " :This server is protected by password.\r\n");
+	else if (server.get_password() != "" && arg != server.get_password() && arg !=server.get_password() + "\r")
 		stoc(client_fd, "464 " + user.get_name() + " :Password incorrect.\r\n");
-	}
+	else
+		server.get_user(client_fd).authenticate();
+	
 };
 
 //command WHO <nameofachannel>

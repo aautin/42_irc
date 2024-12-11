@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 15:27:59 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 16:57:00 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@
 # define RPL_INVITING		"341 "
 
 //errors
-# define ERR_NEEDMOREPARAMS		"461 "
+# define ERR_NEEDMOREPARAMS		"461 " 
+# define ERR_NOTREGISTERED		"451 " 
 
 # define ERR_NICKNAMEINUSE		"433 "
 # define ERR_NONICKNAMEGIVEN	"431 "
@@ -90,7 +91,7 @@ size_t		strtost(std::string str);
 
 
 //commands
-void	cap(int client_fd, std::string arg);
+void	cap(Server& server, int client_fd, std::string arg);
 void	pong(int client_fd, std::string arg);
 void	version(int client_fd);
 void	motd(Server &server, int client_fd);

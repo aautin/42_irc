@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:31:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 16:11:52 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 16:59:16 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ std::vector<Channel*> User::get_joined()
 void		User::authenticate()
 {
 	this->_is_authenticated = true;
+	std::cout << SERV << this->_name << " has been authenticated." << std::endl;
 };
 void User::set_buffer(std::string const & content)
 {

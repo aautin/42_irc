@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 19:21:27 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 15:59:55 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 16:56:48 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	parsing(Server& server, int client_fd, Message& input)
 	
 	try
 	{
-		if (input.get_command() == "CAP")
-			cap(client_fd, input.get_param(0));
+		if (!server.get_user(client_fd).is_authenticated() && input.get_command() != "PASS" && input.get_command() != "CAP")
+			stoc(client_fd, ERR_NOTREGISTERED + server.get_user(client_fd).get_name() + " " + input.get_command() + " :You are not registered.\r\n");
+		else if (input.get_command() == "CAP")
+			cap(server, client_fd, input.get_param(0));
 		else if (input.get_command() == "NICK")
 			nick(server, client_fd, input.get_param(0));
 		else if (input.get_command() == "USER")
