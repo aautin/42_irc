@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:30:58 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/11 16:14:15 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 16:37:44 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,8 @@ void Server::handle_poll(pollfd it)
 				std::perror("accept");
 				return ;
 			}
-			this->add_user(new User(fd));
+			User* newUser = new User(fd);
+			this->add_user(newUser);
 		}
 		else { // Read from user
 			char buffer[1024];
@@ -311,6 +312,7 @@ void	Server::remove_channel(std::string name)
 	{
 		if (this->_channels_list[i]->get_name() == name)
 		{
+			delete this->_channels_list[i];
 			this->_channels_list.erase(this->_channels_list.begin() + i);
 			break;
 		}
