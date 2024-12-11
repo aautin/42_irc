@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 16:46:33 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:21:16 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MESSAGE_HPP
 
 # define ERR_UNKNOWNCOMMAND	421
-# define ERR_NEEDMOREPARAMS	461
 
 # include "ft_irc.hpp"
 
@@ -22,10 +21,10 @@ class Message
 {
 	private:
 		std::string					_prefix;	// optional
+		std::vector<std::string>	_parameters;// e.g. message content
 
 	public:
 		std::string					_command;	// e.g. JOIN, PRIVMSG, PING
-		std::vector<std::string>	_parameters;// e.g. message content
 		
 		//Constructors-Destructors
 		Message(std::string const & message);
@@ -36,6 +35,8 @@ class Message
 
 		//Utils
 		std::string	get_content();
+		std::string	get_param(size_t i);
+		int			get_nbparam();
 
 		//Exceptions
 		class Parsing : public std::exception {

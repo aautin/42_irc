@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 15:16:24 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:20:17 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:21:02 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Message::Message(std::string const & content)
 		elements.push_back(element);
 
 	if (elements.size() == 0 || (elements.size() == 1 && elements[0][0] == ':'))
-		throw Parsing(ERR_NEEDMOREPARAMS);
+		throw Parsing(461);
 	
 	
 	if (elements[0][0] == ':')
@@ -69,3 +69,17 @@ std::string Message::get_content()
 		params += *it;
 	return _prefix + " " + _command + " " + params;
 };
+
+std::string	Message::get_param(size_t i)
+{
+	if (i >= this->_parameters.size())
+		throw Parsing(461);
+	return _parameters[i];
+};
+
+int			Message::get_nbparam()
+{
+	return this->_parameters.size();
+};
+
+

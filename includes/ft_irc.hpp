@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 14:08:36 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:32:14 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:21:35 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@
 # define RPL_INVITING		"341 "
 
 //errors
+# define ERR_NEEDMOREPARAMS		"461 "
+
 # define ERR_NICKNAMEINUSE		"433 "
 # define ERR_NONICKNAMEGIVEN	"431 "
 # define ERR_NOSUCHNICK 		"401 "
@@ -76,7 +78,7 @@
 
 class Server;
 
-void	parsing(Server& server, int client_fd, Message input);
+void	parsing(Server& server, int client_fd, Message& input);
 
 //utils
 void	stoc(int client_fd, std::string msg);

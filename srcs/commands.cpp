@@ -6,7 +6,7 @@
 /*   By: kpoilly <kpoilly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 15:32:30 by kpoilly           #+#    #+#             */
-/*   Updated: 2024/12/10 17:49:55 by kpoilly          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:58:45 by kpoilly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ void	invite(Server& server, int client_fd, std::string targetname, std::string c
 		stoc(client_fd, RPL_INVITING + user.get_name() + " " + targetname + " " + channelname + "\r\n");
 	}
 };
-
+//command QUIT <message>
 void	quit(Server& server, int client_fd, std::string arg)
 {
 	User& user = server.get_user(client_fd);
