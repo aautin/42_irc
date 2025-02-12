@@ -1,4 +1,4 @@
-#ft_IRC
+# ft_IRC
 
 
 This project is about creating our own IRC server, folowing IRC protocols, in C++.
