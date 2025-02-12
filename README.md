@@ -2,6 +2,7 @@
 
 
 This project is about creating our own IRC server, folowing IRC protocols, in C++.
+
 This was a team-of-2 project made with @aautin.
 
 We successfully completed it at 100%
