@@ -1,11 +1,71 @@
-# ft_IRC
+# 42_irc - IRC Server
+
+This repository contains a simple IRC server implementation used for learning socket programming and protocol parsing. The demo shows the server handling multiple clients, channel joins, messages, and basic command flow.
+
+## Demo
+![DEMO](./demo.svg)
 
 
-This project is about creating our own IRC server, folowing IRC protocols, in C++.
 
-This was a team-of-2 project made with @aautin.
+## Workflow Diagram
+```mermaid
+flowchart TD
+    A[Start: Parse CLI Arguments] --> B[Create & Configure Listening Socket]
+    B --> C[Listen for Incoming Connections]
+    C --> D[Accept Client Connection]
+    D --> E[Perform IRC Registration (PASS, NICK, USER)]
+    E --> F[Add User to Server State]
+    F --> G[Read & Parse Client Messages]
+    G --> H{Command Type}
+    H -- PRIVMSG --> I[Route Message to Target User/Channel]
+    H -- JOIN/PART --> J[Update Channel Membership]
+    H -- MODE/TOPIC/KICK --> K[Modify Channel/User State]
+    H -- PING --> L[Reply with PONG]
+    I --> G
+    J --> G
+    K --> G
+    L --> G
+    G --> M{Client Disconnect?}
+    M -- Yes --> N[Clean Up User & Notify Channels]
+    M -- No --> G
+    N --> O[Shutdown: Close Sockets & Free Resources]
+```
 
+- **Initialization Phase**: Parses command-line arguments (port, optional password), initializes server sockets, and prepares internal data structures for users and channels.
+- **Connection Handling Phase**: Accepts TCP connections from IRC clients and performs the registration handshake (PASS/NICK/USER) according to the project's specification.
+- **Command Processing Phase**: Parses incoming IRC messages, validates commands, executes actions (e.g. PRIVMSG, JOIN, PART, MODE), and routes replies to the appropriate clients.
+- **Channel & User Management Phase**: Maintains channel lists, user states, and implements basic mode handling and permission checks.
+- **Cleanup Phase**: On termination or client disconnect, removes users from channels, notifies remaining users where applicable, and closes sockets.
 
-We successfully completed it at 100%
+## Network Testing Environment
 
-![image](https://github.com/user-attachments/assets/43637dec-89b8-427b-9cc9-c70d3cbc13af)
+Typical components used when testing this server locally or in a small test network:
+
+- **Server**: The compiled `ircserv` binary running on a chosen port. It accepts client connections and manages channels/users.
+- **Clients**: IRC clients such as `irssi`, `weechat`, `HexChat`, or simple telnet/netcat sessions for manual testing.
+- **Test Scripts / Tools**: Optional client simulation scripts or small programs to automate registrations, joins, messages, and stress tests. Useful tools include `nc`/`telnet`, Python scripts using sockets, or dedicated IRC bot scripts.
+
+Examples of manual tests:
+- Connect two clients, register with NICK/USER, and exchange PRIVMSGs.
+- Create and join channels, set topics, and test KICK/MODE behaviors.
+- Send malformed commands to validate server parsing and error replies.
+
+## Requirements
+
+- Linux (development and testing assumed on a POSIX-compliant system)
+- C++ compiler (g++/clang++) supporting at least C++98
+- Make to build the project
+- POSIX sockets support (native on Linux)
+
+## Build and run (example):
+
+   ```
+   make
+   ./ircserv <port> [password]
+   ```
+Replace `<port>` with the desired TCP port (e.g. 6667) and provide a password if the server enforces one.
+
+### Optional tools for testing and debugging:
+- `valgrind` for memory checks
+- `gdb` for debugging
+- `telnet` / `nc` for quick manual interactions
