@@ -8,27 +8,29 @@ This repository contains a simple IRC server implementation used for learning so
 
 
 ## Workflow Diagram
+
 ```mermaid
 flowchart TD
     A[Start: Parse CLI Arguments] --> B[Create & Configure Listening Socket]
     B --> C[Listen for Incoming Connections]
     C --> D[Accept Client Connection]
-    D --> E[Perform IRC Registration (PASS, NICK, USER)]
-    E --> F[Add User to Server State]
-    F --> G[Read & Parse Client Messages]
-    G --> H{Command Type}
-    H -- PRIVMSG --> I[Route Message to Target User/Channel]
-    H -- JOIN/PART --> J[Update Channel Membership]
-    H -- MODE/TOPIC/KICK --> K[Modify Channel/User State]
-    H -- PING --> L[Reply with PONG]
-    I --> G
-    J --> G
-    K --> G
-    L --> G
-    G --> M{Client Disconnect?}
-    M -- Yes --> N[Clean Up User & Notify Channels]
-    M -- No --> G
-    N --> O[Shutdown: Close Sockets & Free Resources]
+    D --> E[Perform IRC registration]
+    E --> F[Require PASS/NICK/USER]
+    F --> G[Add user to server state]
+    G --> H[Read and parse client messages]
+    H --> I{Command type}
+    I -- PRIVMSG --> J[Route message to user or channel]
+    I -- JOIN/PART --> K[Update channel membership]
+    I -- MODE/TOPIC/KICK --> L[Modify channel or user state]
+    I -- PING --> M[Reply with PONG]
+    J --> H
+    K --> H
+    L --> H
+    M --> H
+    H --> N{Client disconnect?}
+    N -- Yes --> O[Clean up user and notify channels]
+    N -- No --> H
+    O --> P[Shutdown: close sockets and free resources]
 ```
 
 - **Initialization Phase**: Parses command-line arguments (port, optional password), initializes server sockets, and prepares internal data structures for users and channels.
